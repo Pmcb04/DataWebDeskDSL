@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataWebDeskDSL:WebSite
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dataWebDeskDSL="http://www.example.org/dataWebDeskDSL"
+    name="Wallapop">
+  <pages xsi:type="dataWebDeskDSL:MainPage"
+      pagesReferences="//@pages.1 //@pages.2 //@pages.3"
+      title="Home"/>
+  <pages xsi:type="dataWebDeskDSL:NormalPage"
+      title="Contacto"
+      mannagment="//@roles.0 //@roles.1">
+    <socialMedias
+        user="wallapop"/>
+    <socialMedias
+        name="Twitter"
+        user="wallapop"/>
+    <pagesexternal
+        url="www.google.es"
+        name="Google maps"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:NormalPage"
+      title="Sobre Nosotros"
+      mannagment="//@roles.0 //@roles.1">
+    <socialMedias
+        user="wallapop"/>
+    <socialMedias
+        name="Twitter"
+        user="wallapop"/>
+    <multimedias
+        xsi:type="dataWebDeskDSL:Video"
+        name="nosotros"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:NormalPage"
+      pagesReferences="//@pages.9"
+      title="Tienda"
+      mannagment="//@roles.0 //@roles.1"/>
+  <pages xsi:type="dataWebDeskDSL:CRUDPage"
+      title="CRUD Producto"
+      mannagment="//@roles.0 //@roles.1"
+      entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:DeletePage"
+      title="Borrar usuario"
+      mannagment="//@roles.1"
+      entity="//@entities.1"/>
+  <pages xsi:type="dataWebDeskDSL:DetailPage"
+      title="Detalles Usuario"
+      mannagment="//@roles.1 //@roles.0"
+      entity="//@entities.1"/>
+  <pages xsi:type="dataWebDeskDSL:CreatePage"
+      title="Crear usuario"
+      mannagment="//@roles.1"
+      entity="//@entities.1"/>
+  <pages xsi:type="dataWebDeskDSL:IndexPage"
+      title="Listado Usuario"
+      mannagment="//@roles.1 //@roles.0"
+      entity="//@entities.1"/>
+  <pages xsi:type="dataWebDeskDSL:NormalPage"
+      title="Vista Producto"
+      mannagment="//@roles.0 //@roles.1"/>
+  <roles name="Usuario"
+      access="//@pages.6 //@pages.8 //@pages.4 //@pages.1 //@pages.2 //@pages.3 //@pages.9"/>
+  <roles name="Administrador"
+      access="//@pages.7 //@pages.8 //@pages.5 //@pages.6 //@pages.4 //@pages.9 //@pages.3 //@pages.1 //@pages.2"/>
+  <entities
+      name="Producto"
+      primarykey="//@entities.0/@attributes.3"
+      crudpages="//@pages.4">
+    <attributes
+        type="//@datatype.1"
+        name="precio"/>
+    <attributes
+        type="//@datatype.0"
+        name="nombre"/>
+    <attributes
+        type="//@datatype.0"
+        name="categoria"/>
+    <attributes
+        type="//@datatype.1"
+        name="identificador"/>
+  </entities>
+  <entities
+      name="Usuario"
+      primarykey="//@entities.1/@attributes.0"
+      crudpages="//@pages.6 //@pages.8 //@pages.7 //@pages.5">
+    <attributes
+        type="//@datatype.1"
+        name="identificador"/>
+    <attributes
+        type="//@datatype.0"
+        name="nombre"/>
+  </entities>
+  <datatype
+      name="String"/>
+  <datatype
+      name="int"/>
+</dataWebDeskDSL:WebSite>

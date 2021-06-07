@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<title>dataWebDeskDSL</title>
+	
+		<!-- Autores : Pedro Miguel Carmona Broncano && Ruben Marin Lucas -->
+		<!-- Proyecto de la asignatura DMSS -->
+	
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
+	</head>
+
+	<body>
+
+	<p><b>Authors</b> : Pedro Miguel Carmona Broncano & Rubén Marín Lucas</p>
+	<p><b>Last updated</b> : 28/05/2021</p>
+	<p><img src = "../metamodel/dataWebDeskDSL.jpg" alt = "dataWebDeskDSL" height = "800" /></p>
+	<p><b>Name</b> : dataWebDeskDSL</p>
+	<p><b>NS Prefix</b> : dataWebDeskDSL</p>
+	<p><b>NS URI</b> : http://www.example.org/dataWebDeskDSL</p>
+
+	
+		<span style="background-color:LightGoldenRodYellow">EClass : Rol</span> 
+		<p>Description : Permite diferenciar los distintos tipos de usuarios de la aplicación. Cada rol debe definir de forma obligatoria el atributo name. Además debe tener acceso de 1 a más páginas </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+			<li>(1...1) <b>numeroPaginasAccesibles</b> : EInt (derived) = <span style ="color:blue">if (self.access ->oclIsUndefined()) then 0
+					else self.access -> size()
+					endif</span></li>
+			<li>(1...1) <b>numeroEntidadesAccesibles</b> : EInt (derived) = <span style ="color:blue">if (self.access->selectByKind(CRUDPage).entity->oclIsUndefined()) then 0
+						else self.access->selectByKind(CRUDPage).entity->asSet() -> size()
+						endif</span></li>
+		</ul>
+
+		<ul>
+			<li>(1...*) <b>mannagment#access</b> : Page  </li>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : NormalPage</span> extends Page
+		<p>Description : Páginas de tipo normal representadas en el modelo.  </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		<li>(0...*) <b>pagesReferences</b> : Page  </li>
+		<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+		<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+		<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+		<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : CreatePage</span> extends CRUDPage
+		<p>Description : Páginas de tipo create representadas en el modelo.  </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		<li>(0...*) <b>pagesReferences</b> : Page  </li>
+		<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+		<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+		<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+		<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		<li>(1...1) <b>crudpages#entity</b> : Entity  </li>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : MainPage</span> extends Page
+		<p>Description : Páginas de tipo main representadas en el modelo.  </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		<li>(0...*) <b>pagesReferences</b> : Page  </li>
+		<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+		<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+		<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+		<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : DetailPage</span> extends CRUDPage
+		<p>Description : Páginas de tipo detail representadas en el modelo.  </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		<li>(0...*) <b>pagesReferences</b> : Page  </li>
+		<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+		<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+		<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+		<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		<li>(1...1) <b>crudpages#entity</b> : Entity  </li>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : DeletePage</span> extends CRUDPage
+		<p>Description : Páginas de tipo delete representadas en el modelo.  </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		<li>(0...*) <b>pagesReferences</b> : Page  </li>
+		<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+		<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+		<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+		<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		<li>(1...1) <b>crudpages#entity</b> : Entity  </li>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : CRUDPage</span> extends Page
+		<p>Description : Páginas de tipo CRUD representadas en el modelo. Está relacionado con alguna entidad (Entity).  Es superclase de DetailPage, DeletePage, IndexPage y  CreatePage. </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+			<li>(1...1) <b>crudpages#entity</b> : Entity  </li>
+		</ul>
+		
+		<ul>
+		<li>(0...*) <b>pagesReferences</b> : Page  </li>
+		<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+		<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+		<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+		<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : IndexPage</span> extends CRUDPage
+		<p>Description : Páginas de tipo index representadas en el modelo.  </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		<li>(0...*) <b>pagesReferences</b> : Page  </li>
+		<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+		<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+		<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+		<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		<li>(1...1) <b>crudpages#entity</b> : Entity  </li>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGrey">EClass : Page</span> (abstracta) 
+		<p>Description : Paginas representadas en el modelo. Cada página está compuesta de calquier número de redes sociales (SocialMedia), páginas externas (PageExternal) y archivos multimedia (Multimedia). Además debe definir el atributo name y puede tener cualquier número de referencias a otras páginas o a ella misma. Es superclase abstracta de MainPage, NormalPage y CRUDPage </p>
+		
+		<ul>
+			<li>(1...1) <b>title</b> : EString </li>
+		</ul>
+
+		<ul>
+			<li>(0...*) <b>pagesReferences</b> : Page  </li>
+			<li>(0...*) <b>socialMedias</b> : SocialMedia (Composition) </li>
+			<li>(0...*) <b>access#mannagment</b> : Rol  </li>
+			<li>(0...*) <b>pagesexternal</b> : PageExternal (Composition) </li>
+			<li>(0...*) <b>multimedias</b> : Multimedia (Composition) </li>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : SocialMedia</span> 
+		<p>Description : Redes sociales modeladas en el sistema. De forma obligatoria debe definir los atributos user y name. </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : TypeSocialMedia </li>
+			<li>(1...1) <b>user</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : WebSite</span> 
+		<p>Description : Sitio web representado en el modelo. Está compuesto por una o varias entidades (Entity), por una o varias páginas (Page) y por cualquier número de páginas (Page), roles (Roles) y tipos de dato (DataType). Define de forma obligatoria el atributo name. </p>
+		
+		<ul>
+			<li>(1...1) <b>paginasMediasAccesibles</b> : EFloat (derived) = <span style ="color:blue">if (self.roles->size() = 0) then 0
+							 else (self.roles.numeroPaginasAccesibles -> sum() / self.roles -> size())
+							 endif</span></li>
+			<li>(1...1) <b>name</b> : EString </li>
+		</ul>
+
+		<ul>
+			<li>(1...*) <b>pages</b> : Page (Composition) </li>
+			<li>(0...*) <b>roles</b> : Rol (Composition) </li>
+			<li>(1...*) <b>entities</b> : Entity (Composition) </li>
+			<li>(0...*) <b>datatype</b> : DataType (Composition) </li>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+			<li>invariant <b>one_sm</b> : <span style ="color:blue">pages.socialMedias -> size() >= 1</span></li>
+			<li>invariant <b>one_home</b> : <span style ="color:blue">pages->selectByType(MainPage)->select(mannagment->size() = 0) -> size() = 1</span></li>
+			<li>invariant <b>no_pages_alone</b> : <span style ="color:blue">self.roles.access->asSet()->size()+1 = self.pages->size() </span></li>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : Entity</span> 
+		<p>Description : Represenata a los datos que pueden incluir las distintas páginas. Está relacionada con 1 o más páginas crud, además de referenciar a cualquier numero de entidades y tener un primary key. Debe definir de forma obligatoria un name. Cada entity está compuesta  por uno o más atributos.   </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+		</ul>
+
+		<ul>
+			<li>(1...*) <b>attributes</b> : Attribute (Composition) </li>
+			<li>(0...*) <b>entitiesReferences</b> : Entity  </li>
+			<li>(1...1) <b>primarykey</b> : Attribute  </li>
+			<li>(1...*) <b>entity#crudpages</b> : CRUDPage  </li>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+			<li>invariant <b>no_myself</b> : <span style ="color:blue">entitiesReferences->excludes(self) </span></li>
+			<li>invariant <b>no_other_references</b> : <span style ="color:blue">entitiesReferences.entitiesReferences->excludes(self) </span></li>
+			<li>invariant <b>no_more_CRUD</b> : <span style ="color:blue">crudpages->selectByType(CRUDPage)->size() = 1 implies crudpages->size() = 1</span></li>
+			<li>invariant <b>index_details_together</b> : <span style ="color:blue">
+					((crudpages->selectByType(IndexPage)->size() = 1 implies crudpages->selectByType(DetailPage)->size() = 1) 
+					and  (crudpages->selectByType(DetailPage)->size() = 1  implies crudpages->selectByType(IndexPage)->size() = 1))</span></li>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : Attribute</span> 
+		<p>Description : Permite definir los atributos de las entidades. Define de froma obligatoria los atributos name, value y maxvalues. Además está relacionado con un tipo (type) </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+			<li>(0...1) <b>value</b> : EString </li>
+			<li>(1...1) <b>maxValues</b> : EInt </li>
+		</ul>
+
+		<ul>
+			<li>(1...1) <b>type</b> : DataType  </li>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : DataType</span> 
+		<p>Description : Permite definir el tipo de datos de los atributos. Define de forma obligatoria el atributo name. </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : PageExternal</span> 
+		<p>Description : Páginas externas modeladas en el sistema. De forma obligatoria debe definir los atributos url y name. </p>
+		
+		<ul>
+			<li>(1...1) <b>url</b> : EString </li>
+			<li>(0...1) <b>name</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGrey">EClass : Multimedia</span> (abstracta) 
+		<p>Description : Representa a los distintos datos que pueden contener las páginas. Define de forma obligatoria el atributo name. Es una superclase abstracta de Text, Video, Audio e Image </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : Text</span> extends Multimedia
+		<p>Description : Elemento de tipo texto representado en el modelo.  </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+			<li>(1...1) <b>extension</b> : TypeText </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : Video</span> extends Multimedia
+		<p>Description : Elemento de tipo video representado en el modelo. </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+			<li>(1...1) <b>extension</b> : TypeVideo </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : Audio</span> extends Multimedia
+		<p>Description : Elemento de tipo audio representado en el modelo. </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+			<li>(1...1) <b>extension</b> : TypeAudio </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+		<span style="background-color:LightGoldenRodYellow">EClass : Image</span> extends Multimedia
+		<p>Description : Elemento de tipo imagen representado en el modelo. </p>
+		
+		<ul>
+			<li>(1...1) <b>name</b> : EString </li>
+			<li>(1...1) <b>extension</b> : TypeImage </li>
+		</ul>
+
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+		
+		<ul>
+		</ul>
+
+
+	<span style="background-color:#e6ffe6">EEnum : TypeText</span> 
+
+		<ul>
+			<li>0 : txt</li>
+			<li>1 : doc</li>
+			<li>2 : docx</li>
+		</ul>
+	<span style="background-color:#e6ffe6">EEnum : TypeAudio</span> 
+
+		<ul>
+			<li>0 : mp3</li>
+			<li>1 : wav</li>
+			<li>2 : wma</li>
+		</ul>
+	<span style="background-color:#e6ffe6">EEnum : TypeImage</span> 
+
+		<ul>
+			<li>0 : png</li>
+			<li>1 : jpg</li>
+			<li>2 : gif</li>
+		</ul>
+	<span style="background-color:#e6ffe6">EEnum : TypeVideo</span> 
+
+		<ul>
+			<li>0 : mp4</li>
+			<li>1 : avi</li>
+			<li>2 : mkv</li>
+		</ul>
+	<span style="background-color:#e6ffe6">EEnum : TypeSocialMedia</span> 
+
+		<ul>
+			<li>0 : Facebook</li>
+			<li>1 : Twitter</li>
+		</ul>
+	
+	
+	</body>
+</html>

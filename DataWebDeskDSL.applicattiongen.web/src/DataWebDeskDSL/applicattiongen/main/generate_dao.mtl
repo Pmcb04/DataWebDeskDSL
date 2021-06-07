@@ -1,0 +1,128 @@
+[comment encoding = UTF-8 /]
+[module generate_dao('http://www.example.org/dataWebDeskDSL')]
+
+[template public generateClases(ws : WebSite)]
+[comment @main /]
+[ws.entities.generateDao()/]
+[/template]
+
+[template public generateDao(c : Entity)]
+[file ('/dao/' + c.name +'Dao.java', false, 'UTF-8')]
+/*
+	Autores : Pedro Miguel Carmona Broncano && Ruben Marin Lucas
+	Proyecto de la asignatura DMSS
+*/
+
+package dao;
+
+import java.util.List;
+import model.[c.name.replaceAll(' ', '')/];
+
+public interface [c.name.replaceAll(' ', '_')/]Dao
+{
+	List<[c.name.replaceAll(' ', '_')/]> getAll[c.name.replaceAll(' ', '_')/]s();
+	[for (a: Attribute | c.attributes)]
+	[c.name.replaceAll(' ', '_')/] get[c.name.replaceAll(' ', '_')/]By[a.name.toUpperFirst().replaceAll(' ', '_')/]([a.type.name.replaceAll(' ', '')/] [a.name.toLowerCase().replaceAll(' ', '_')/]);
+	[/for]
+	[for (a: Attribute | c.entitiesReferences.primarykey)]
+	[c.name.replaceAll(' ', '_')/] get[c.name.replaceAll(' ', '_')/]By[a.name.toUpperFirst().replaceAll(' ', '_')/]([a.type.name.replaceAll(' ', '')/] [a.name.toLowerCase().replaceAll(' ', '_')/]);
+	[/for]
+	void save[c.name.replaceAll(' ', '_')/]([c.name.replaceAll(' ', '_')/] [c.name.toLowerCase().replaceAll(' ', '_')/]);
+	void delete[c.name.replaceAll(' ', '_')/]([c.name.replaceAll(' ', '_')/] [c.name.toLowerCase().replaceAll(' ', '_')/]);
+}
+[/file]
+
+[file ('/dao/' + c.name +'DaoImpl.java', false, 'UTF-8')]
+/*
+	Autores : Pedro Miguel Carmona Broncano && Ruben Marin Lucas
+	Proyecto de la asignatura DMSS
+*/
+
+package dao;
+
+import java.util.*;
+import model.[c.name.replaceAll(' ', '')/];
+
+
+public class [c.name.replaceAll(' ', '_')/]DaoImpl implements [c.name.replaceAll(' ', '_')/]Dao
+{
+	// list is working as a database
+	private List<[c.name.replaceAll(' ', '_')/]> [c.name.toLowerCase().replaceAll(' ', '_')/]s;
+
+	[comentario('Metodo constructor de la clase ' + c.name.replaceAll(' ', '_'))/]	
+	public [c.name/]DaoImpl(){
+		[c.name.toLowerCase().replaceAll(' ', '_')/]s = new ArrayList<[c.name.toUpperFirst().replaceAll(' ', '')/]>();
+	}
+
+	[comentario('Metodo getAll()')/]
+    @Override
+    public List<[c.name.replaceAll(' ', '_')/]> getAll[c.name.replaceAll(' ', '_')/]s() {
+        return [c.name.toLowerCase().replaceAll(' ', '_')/]s;
+    }
+
+	[for (a: Attribute | c.attributes)]
+	[comentario('Metodo ' + 'get' + c.name.replaceAll(' ', '_') + 'By' + a.name.toUpperFirst().replaceAll(' ', '_') + '()')/]
+	@Override
+    public [c.name.replaceAll(' ', '_')/] get[c.name.replaceAll(' ', '_')/]By[a.name.toUpperFirst().replaceAll(' ', '_')/]([a.type.name.replaceAll(' ', '')/] [a.name.toLowerCase().replaceAll(' ', '_')/]) {
+        
+		[c.name.toUpperFirst().replaceAll(' ', '')/] [c.name.toLowerCase().replaceAll(' ', '')/] = new [c.name.toUpperFirst().replaceAll(' ', '')/]();
+
+		int i = 0;
+		boolean enc = false;
+
+		while(i < [c.name.toLowerCase().replaceAll(' ', '_')/]s.size() && !enc){
+			if([c.name.toLowerCase().replaceAll(' ', '_')/]s.get(i).[if (a.type.name = 'String')]get[a.name.toUpperFirst().replaceAll(' ', '_')/]().equals([a.name.toLowerCase().replaceAll(' ', '_')/])){[else]get[a.name.toUpperFirst().replaceAll(' ', '_')/]() == [a.name.toLowerCase().replaceAll(' ', '_')/]){
+			[/if]
+				[c.name.toLowerCase().replaceAll(' ', '')/] = [c.name.toLowerCase().replaceAll(' ', '_')/]s.get(i);
+				enc = true;
+			}
+		}
+
+		return [c.name.toLowerCase().replaceAll(' ', '')/];
+	}
+
+	[/for]
+	[for (a: Attribute | c.entitiesReferences.primarykey)]
+	[comentario('Metodo ' + 'get' + c.name.replaceAll(' ', '_') + 'By' + a.name.toUpperFirst().replaceAll(' ', '_') + '()')/]
+	@Override
+    public [c.name.replaceAll(' ', '_')/] get[c.name.replaceAll(' ', '_')/]By[a.name.toUpperFirst().replaceAll(' ', '_')/]([a.type.name.replaceAll(' ', '')/] [a.name.toLowerCase().replaceAll(' ', '_')/]) {
+        
+		[c.name.toUpperFirst().replaceAll(' ', '')/] [c.name.toLowerCase().replaceAll(' ', '')/] = new [c.name.toUpperFirst().replaceAll(' ', '')/]();
+
+		int i = 0;
+		boolean enc = false;
+
+		while(i < [c.name.toLowerCase().replaceAll(' ', '_')/]s.size() && !enc){
+			if([c.name.toLowerCase().replaceAll(' ', '_')/]s.get(i).[if (a.type.name = 'String')]get[a.name.toUpperFirst().replaceAll(' ', '_')/]().equals([a.name.toLowerCase().replaceAll(' ', '_')/])){[else]get[a.name.toUpperFirst().replaceAll(' ', '_')/]() == [a.name.toLowerCase().replaceAll(' ', '_')/]){
+			[/if]
+				[c.name.toLowerCase().replaceAll(' ', '')/] = [c.name.toLowerCase().replaceAll(' ', '_')/]s.get(i);
+				enc = true;
+			}
+		}
+
+		return [c.name.toLowerCase().replaceAll(' ', '')/];
+	}
+
+	[/for]
+
+
+	[comentario('Metodo save()')/]
+	@Override
+    public void save[c.name.replaceAll(' ', '_')/]([c.name.replaceAll(' ', '_')/] [c.name.toLowerCase().replaceAll(' ', '_')/]) {
+        [c.name.toLowerCase().replaceAll(' ', '_')/]s.add([c.name.toLowerCase().replaceAll(' ', '_')/]);
+    }
+
+	[comentario('Metodo delete()')/]
+    @Override
+    public void delete[c.name/]([c.name/] [c.name.toLowerCase()/]) {
+         [c.name.toLowerCase()/]s.remove([c.name.toLowerCase()/]);
+    }
+}
+[/file]
+[/template]
+
+[template public comentario(arg : String)]
+//-------------------------------------------------------------------------------------
+// [arg/]
+//-------------------------------------------------------------------------------------
+[/template]

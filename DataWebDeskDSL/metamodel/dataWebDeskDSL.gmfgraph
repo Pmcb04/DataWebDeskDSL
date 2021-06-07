@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="ASCII"?>
+<gmfgraph:Canvas xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmfgraph="http://www.eclipse.org/gmf/2006/GraphicalDefinition" name="dataWebDeskDSL">
+  <figures name="Default">
+    <figures xsi:type="gmfgraph:PolylineDecoration" name="PagePagesReferencesFigureTargetDecoration"/>
+    <figures xsi:type="gmfgraph:PolylineDecoration" name="EntityEntitiesReferencesFigureTargetDecoration"/>
+    <figures xsi:type="gmfgraph:PolylineDecoration" name="EntityPrimarykeyFigureTargetDecoration"/>
+    <figures xsi:type="gmfgraph:PolylineDecoration" name="AttributeTypeFigureTargetDecoration"/>
+    <descriptors name="RolFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="RolFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/rol.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="RolLabelFigure" text="Rol"/>
+      </actualFigure>
+      <accessors accessor="getFigureRolLabelFigure" figure="//@figures.0/@descriptors.0/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="NormalPageFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="NormalPageFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="207" green="89" blue="25"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="NormalPageLabelFigure" text="NormalPage">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="NormalPageSocialMediasCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="NormalPagePagesexternalCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="NormalPageMultimediasCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureNormalPageLabelFigure" figure="//@figures.0/@descriptors.1/@actualFigure/@children.0"/>
+      <accessors accessor="getNormalPageSocialMediasCompartmentFigure" figure="//@figures.0/@descriptors.1/@actualFigure/@children.1"/>
+      <accessors accessor="getNormalPagePagesexternalCompartmentFigure" figure="//@figures.0/@descriptors.1/@actualFigure/@children.2"/>
+      <accessors accessor="getNormalPageMultimediasCompartmentFigure" figure="//@figures.0/@descriptors.1/@actualFigure/@children.3"/>
+    </descriptors>
+    <descriptors name="CreatePageFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="CreatePageFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="207" green="204" blue="25"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="CreatePageLabelFigure" text="CreatePage">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="CreatePageSocialMediasCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="CreatePagePagesexternalCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="CreatePageMultimediasCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureCreatePageLabelFigure" figure="//@figures.0/@descriptors.2/@actualFigure/@children.0"/>
+      <accessors accessor="getCreatePageSocialMediasCompartmentFigure" figure="//@figures.0/@descriptors.2/@actualFigure/@children.1"/>
+      <accessors accessor="getCreatePagePagesexternalCompartmentFigure" figure="//@figures.0/@descriptors.2/@actualFigure/@children.2"/>
+      <accessors accessor="getCreatePageMultimediasCompartmentFigure" figure="//@figures.0/@descriptors.2/@actualFigure/@children.3"/>
+    </descriptors>
+    <descriptors name="MainPageFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="MainPageFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="92" green="25" blue="207"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="MainPageLabelFigure" text="MainPage">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="MainPageSocialMediasCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="MainPagePagesexternalCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="MainPageMultimediasCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureMainPageLabelFigure" figure="//@figures.0/@descriptors.3/@actualFigure/@children.0"/>
+      <accessors accessor="getMainPageSocialMediasCompartmentFigure" figure="//@figures.0/@descriptors.3/@actualFigure/@children.1"/>
+      <accessors accessor="getMainPagePagesexternalCompartmentFigure" figure="//@figures.0/@descriptors.3/@actualFigure/@children.2"/>
+      <accessors accessor="getMainPageMultimediasCompartmentFigure" figure="//@figures.0/@descriptors.3/@actualFigure/@children.3"/>
+    </descriptors>
+    <descriptors name="DetailPageFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="DetailPageFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="25" green="55" blue="207"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="DetailPageLabelFigure" text="DetailPage">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="DetailPageSocialMediasCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="DetailPagePagesexternalCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="DetailPageMultimediasCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureDetailPageLabelFigure" figure="//@figures.0/@descriptors.4/@actualFigure/@children.0"/>
+      <accessors accessor="getDetailPageSocialMediasCompartmentFigure" figure="//@figures.0/@descriptors.4/@actualFigure/@children.1"/>
+      <accessors accessor="getDetailPagePagesexternalCompartmentFigure" figure="//@figures.0/@descriptors.4/@actualFigure/@children.2"/>
+      <accessors accessor="getDetailPageMultimediasCompartmentFigure" figure="//@figures.0/@descriptors.4/@actualFigure/@children.3"/>
+    </descriptors>
+    <descriptors name="DeletePageFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="DeletePageFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="207" green="25" blue="25"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="DeletePageLabelFigure" text="DeletePage">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="DeletePageSocialMediasCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="DeletePagePagesexternalCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="DeletePageMultimediasCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureDeletePageLabelFigure" figure="//@figures.0/@descriptors.5/@actualFigure/@children.0"/>
+      <accessors accessor="getDeletePageSocialMediasCompartmentFigure" figure="//@figures.0/@descriptors.5/@actualFigure/@children.1"/>
+      <accessors accessor="getDeletePagePagesexternalCompartmentFigure" figure="//@figures.0/@descriptors.5/@actualFigure/@children.2"/>
+      <accessors accessor="getDeletePageMultimediasCompartmentFigure" figure="//@figures.0/@descriptors.5/@actualFigure/@children.3"/>
+    </descriptors>
+    <descriptors name="CRUDPageFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="CRUDPageFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="207" green="25" blue="140"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="CRUDPageLabelFigure" text="CRUDPage">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="CRUDPageSocialMediasCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="CRUDPagePagesexternalCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="CRUDPageMultimediasCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureCRUDPageLabelFigure" figure="//@figures.0/@descriptors.6/@actualFigure/@children.0"/>
+      <accessors accessor="getCRUDPageSocialMediasCompartmentFigure" figure="//@figures.0/@descriptors.6/@actualFigure/@children.1"/>
+      <accessors accessor="getCRUDPagePagesexternalCompartmentFigure" figure="//@figures.0/@descriptors.6/@actualFigure/@children.2"/>
+      <accessors accessor="getCRUDPageMultimediasCompartmentFigure" figure="//@figures.0/@descriptors.6/@actualFigure/@children.3"/>
+    </descriptors>
+    <descriptors name="IndexPageFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="IndexPageFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="25" green="207" blue="94"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="IndexPageLabelFigure" text="IndexPage">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="IndexPageSocialMediasCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="IndexPagePagesexternalCompartmentFigure" outline="false"/>
+        <children xsi:type="gmfgraph:Rectangle" name="IndexPageMultimediasCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureIndexPageLabelFigure" figure="//@figures.0/@descriptors.7/@actualFigure/@children.0"/>
+      <accessors accessor="getIndexPageSocialMediasCompartmentFigure" figure="//@figures.0/@descriptors.7/@actualFigure/@children.1"/>
+      <accessors accessor="getIndexPagePagesexternalCompartmentFigure" figure="//@figures.0/@descriptors.7/@actualFigure/@children.2"/>
+      <accessors accessor="getIndexPageMultimediasCompartmentFigure" figure="//@figures.0/@descriptors.7/@actualFigure/@children.3"/>
+    </descriptors>
+    <descriptors name="SocialMediaFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="SocialMediaFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/redes-sociales.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="SocialMediaLabelFigure" text="SocialMedia"/>
+      </actualFigure>
+      <accessors accessor="getFigureSocialMediaLabelFigure" figure="//@figures.0/@descriptors.8/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="EntityFigure">
+      <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="EntityFigure" lineWidth="3">
+        <foregroundColor xsi:type="gmfgraph:RGBColor" red="25" green="204" blue="207"/>
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="EntityLabelFigure" text="Entity">
+          <maximumSize dx="10000" dy="50"/>
+        </children>
+        <children xsi:type="gmfgraph:Rectangle" name="EntityAttributesCompartmentFigure" outline="false"/>
+      </actualFigure>
+      <accessors accessor="getFigureEntityLabelFigure" figure="//@figures.0/@descriptors.9/@actualFigure/@children.0"/>
+      <accessors accessor="getEntityAttributesCompartmentFigure" figure="//@figures.0/@descriptors.9/@actualFigure/@children.1"/>
+    </descriptors>
+    <descriptors name="AttributeFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="AttributeFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/atributo.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="AttributeLabelFigure" text="Attribute"/>
+      </actualFigure>
+      <accessors accessor="getFigureAttributeLabelFigure" figure="//@figures.0/@descriptors.10/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="DataTypeFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="DataTypeFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/datatype.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="DataTypeLabelFigure" text="DataType"/>
+      </actualFigure>
+      <accessors accessor="getFigureDataTypeLabelFigure" figure="//@figures.0/@descriptors.11/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="PageExternalFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="PageExternalFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/url.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="PageExternalLabelFigure" text="PageExternal"/>
+      </actualFigure>
+      <accessors accessor="getFigurePageExternalLabelFigure" figure="//@figures.0/@descriptors.12/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="TextFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="TextFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/file.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="TextLabelFigure" text="Text"/>
+      </actualFigure>
+      <accessors accessor="getFigureTextLabelFigure" figure="//@figures.0/@descriptors.13/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="VideoFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="VideoFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/video.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="VideoLabelFigure" text="Video"/>
+      </actualFigure>
+      <accessors accessor="getFigureVideoLabelFigure" figure="//@figures.0/@descriptors.14/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="AudioFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="AudioFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/audio.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="AudioLabelFigure" text="Audio"/>
+      </actualFigure>
+      <accessors accessor="getFigureAudioLabelFigure" figure="//@figures.0/@descriptors.15/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="ImageFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="ImageFigure" documentURI="platform:/plugin/DataWebDeskDSL/icons/image.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+        <children xsi:type="gmfgraph:Label" name="ImageLabelFigure" text="Image"/>
+      </actualFigure>
+      <accessors accessor="getFigureImageLabelFigure" figure="//@figures.0/@descriptors.16/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors name="RolAccessFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="RolAccessFigure" lineWidth="2" lineKind="LINE_DOT"/>
+    </descriptors>
+    <descriptors name="RolAccessExternalLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="RolAccessExternalLabel"/>
+    </descriptors>
+    <descriptors name="PagePagesReferencesFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="PagePagesReferencesFigure" lineKind="LINE_DASH" targetDecoration="//@figures.0/@figures.0"/>
+    </descriptors>
+    <descriptors name="PagePagesReferencesExternalLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="PagePagesReferencesExternalLabel"/>
+    </descriptors>
+    <descriptors name="EntityEntitiesReferencesFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="EntityEntitiesReferencesFigure" lineKind="LINE_DASH" targetDecoration="//@figures.0/@figures.1"/>
+    </descriptors>
+    <descriptors name="EntityEntitiesReferencesExternalLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="EntityEntitiesReferencesExternalLabel"/>
+    </descriptors>
+    <descriptors name="EntityPrimarykeyFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="EntityPrimarykeyFigure" lineKind="LINE_DASH" targetDecoration="//@figures.0/@figures.2"/>
+    </descriptors>
+    <descriptors name="EntityPrimarykeyExternalLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="EntityPrimarykeyExternalLabel"/>
+    </descriptors>
+    <descriptors name="EntityCrudpagesFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="EntityCrudpagesFigure" lineWidth="2" lineKind="LINE_DOT"/>
+    </descriptors>
+    <descriptors name="EntityCrudpagesExternalLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="EntityCrudpagesExternalLabel"/>
+    </descriptors>
+    <descriptors name="AttributeTypeFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="AttributeTypeFigure" lineKind="LINE_DASH" targetDecoration="//@figures.0/@figures.3"/>
+    </descriptors>
+    <descriptors name="AttributeTypeExternalLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="AttributeTypeExternalLabel"/>
+    </descriptors>
+  </figures>
+  <nodes name="Rol" figure="RolFigure"/>
+  <nodes name="NormalPage" figure="NormalPageFigure"/>
+  <nodes name="CreatePage" figure="CreatePageFigure"/>
+  <nodes name="MainPage" figure="MainPageFigure"/>
+  <nodes name="DetailPage" figure="DetailPageFigure"/>
+  <nodes name="DeletePage" figure="DeletePageFigure"/>
+  <nodes name="CRUDPage" figure="CRUDPageFigure"/>
+  <nodes name="IndexPage" figure="IndexPageFigure"/>
+  <nodes name="SocialMedia" figure="SocialMediaFigure"/>
+  <nodes name="Entity" figure="EntityFigure"/>
+  <nodes name="Attribute" figure="AttributeFigure"/>
+  <nodes name="DataType" figure="DataTypeFigure"/>
+  <nodes name="PageExternal" figure="PageExternalFigure"/>
+  <nodes name="Text" figure="TextFigure"/>
+  <nodes name="Video" figure="VideoFigure"/>
+  <nodes name="Audio" figure="AudioFigure"/>
+  <nodes name="Image" figure="ImageFigure"/>
+  <connections name="RolAccess" figure="RolAccessFigure"/>
+  <connections name="PagePagesReferences" figure="PagePagesReferencesFigure"/>
+  <connections name="EntityEntitiesReferences" figure="EntityEntitiesReferencesFigure"/>
+  <connections name="EntityPrimarykey" figure="EntityPrimarykeyFigure"/>
+  <connections name="EntityCrudpages" figure="EntityCrudpagesFigure"/>
+  <connections name="AttributeType" figure="AttributeTypeFigure"/>
+  <compartments name="NormalPageSocialMediasCompartment" figure="NormalPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.1/@accessors.1"/>
+  <compartments name="NormalPagePagesexternalCompartment" figure="NormalPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.1/@accessors.2"/>
+  <compartments name="NormalPageMultimediasCompartment" figure="NormalPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.1/@accessors.3"/>
+  <compartments name="CreatePageSocialMediasCompartment" figure="CreatePageFigure" collapsible="true" accessor="//@figures.0/@descriptors.2/@accessors.1"/>
+  <compartments name="CreatePagePagesexternalCompartment" figure="CreatePageFigure" collapsible="true" accessor="//@figures.0/@descriptors.2/@accessors.2"/>
+  <compartments name="CreatePageMultimediasCompartment" figure="CreatePageFigure" collapsible="true" accessor="//@figures.0/@descriptors.2/@accessors.3"/>
+  <compartments name="MainPageSocialMediasCompartment" figure="MainPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.3/@accessors.1"/>
+  <compartments name="MainPagePagesexternalCompartment" figure="MainPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.3/@accessors.2"/>
+  <compartments name="MainPageMultimediasCompartment" figure="MainPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.3/@accessors.3"/>
+  <compartments name="DetailPageSocialMediasCompartment" figure="DetailPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.4/@accessors.1"/>
+  <compartments name="DetailPagePagesexternalCompartment" figure="DetailPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.4/@accessors.2"/>
+  <compartments name="DetailPageMultimediasCompartment" figure="DetailPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.4/@accessors.3"/>
+  <compartments name="DeletePageSocialMediasCompartment" figure="DeletePageFigure" collapsible="true" accessor="//@figures.0/@descriptors.5/@accessors.1"/>
+  <compartments name="DeletePagePagesexternalCompartment" figure="DeletePageFigure" collapsible="true" accessor="//@figures.0/@descriptors.5/@accessors.2"/>
+  <compartments name="DeletePageMultimediasCompartment" figure="DeletePageFigure" collapsible="true" accessor="//@figures.0/@descriptors.5/@accessors.3"/>
+  <compartments name="CRUDPageSocialMediasCompartment" figure="CRUDPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.6/@accessors.1"/>
+  <compartments name="CRUDPagePagesexternalCompartment" figure="CRUDPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.6/@accessors.2"/>
+  <compartments name="CRUDPageMultimediasCompartment" figure="CRUDPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.6/@accessors.3"/>
+  <compartments name="IndexPageSocialMediasCompartment" figure="IndexPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.7/@accessors.1"/>
+  <compartments name="IndexPagePagesexternalCompartment" figure="IndexPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.7/@accessors.2"/>
+  <compartments name="IndexPageMultimediasCompartment" figure="IndexPageFigure" collapsible="true" accessor="//@figures.0/@descriptors.7/@accessors.3"/>
+  <compartments name="EntityAttributesCompartment" figure="EntityFigure" collapsible="true" accessor="//@figures.0/@descriptors.9/@accessors.1"/>
+  <labels name="RolLabel" figure="RolFigure" elementIcon="false" accessor="//@figures.0/@descriptors.0/@accessors.0"/>
+  <labels name="NormalPageLabel" figure="NormalPageFigure" accessor="//@figures.0/@descriptors.1/@accessors.0"/>
+  <labels name="CreatePageLabel" figure="CreatePageFigure" accessor="//@figures.0/@descriptors.2/@accessors.0"/>
+  <labels name="MainPageLabel" figure="MainPageFigure" accessor="//@figures.0/@descriptors.3/@accessors.0"/>
+  <labels name="DetailPageLabel" figure="DetailPageFigure" accessor="//@figures.0/@descriptors.4/@accessors.0"/>
+  <labels name="DeletePageLabel" figure="DeletePageFigure" accessor="//@figures.0/@descriptors.5/@accessors.0"/>
+  <labels name="CRUDPageLabel" figure="CRUDPageFigure" accessor="//@figures.0/@descriptors.6/@accessors.0"/>
+  <labels name="IndexPageLabel" figure="IndexPageFigure" accessor="//@figures.0/@descriptors.7/@accessors.0"/>
+  <labels name="SocialMediaLabel" figure="SocialMediaFigure" elementIcon="false" accessor="//@figures.0/@descriptors.8/@accessors.0"/>
+  <labels name="EntityLabel" figure="EntityFigure" accessor="//@figures.0/@descriptors.9/@accessors.0"/>
+  <labels name="AttributeLabel" figure="AttributeFigure" elementIcon="false" accessor="//@figures.0/@descriptors.10/@accessors.0"/>
+  <labels name="DataTypeLabel" figure="DataTypeFigure" elementIcon="false" accessor="//@figures.0/@descriptors.11/@accessors.0"/>
+  <labels name="PageExternalLabel" figure="PageExternalFigure" elementIcon="false" accessor="//@figures.0/@descriptors.12/@accessors.0"/>
+  <labels name="TextLabel" figure="TextFigure" elementIcon="false" accessor="//@figures.0/@descriptors.13/@accessors.0"/>
+  <labels name="VideoLabel" figure="VideoFigure" elementIcon="false" accessor="//@figures.0/@descriptors.14/@accessors.0"/>
+  <labels name="AudioLabel" figure="AudioFigure" elementIcon="false" accessor="//@figures.0/@descriptors.15/@accessors.0"/>
+  <labels name="ImageLabel" figure="ImageFigure" elementIcon="false" accessor="//@figures.0/@descriptors.16/@accessors.0"/>
+  <labels name="RolAccessExternalLabel" figure="RolAccessExternalLabelFigure" elementIcon="false"/>
+  <labels name="PagePagesReferencesExternalLabel" figure="PagePagesReferencesExternalLabelFigure" elementIcon="false"/>
+  <labels name="EntityEntitiesReferencesExternalLabel" figure="EntityEntitiesReferencesExternalLabelFigure" elementIcon="false"/>
+  <labels name="EntityPrimarykeyExternalLabel" figure="EntityPrimarykeyExternalLabelFigure" elementIcon="false"/>
+  <labels name="EntityCrudpagesExternalLabel" figure="EntityCrudpagesExternalLabelFigure" elementIcon="false"/>
+  <labels name="AttributeTypeExternalLabel" figure="AttributeTypeExternalLabelFigure" elementIcon="false"/>
+</gmfgraph:Canvas>

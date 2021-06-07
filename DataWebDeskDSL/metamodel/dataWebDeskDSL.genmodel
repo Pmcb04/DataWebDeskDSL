@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="" modelDirectory="/DataWebDeskDSL/src" modelPluginID="DataWebDeskDSL"
+    modelName="DataWebDeskDSL" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
+    copyrightFields="false">
+  <foreignModel>dataWebDeskDSL.emf</foreignModel>
+  <genPackages prefix="DataWebDeskDSL" disposableProviderFactory="true" ecorePackage="dataWebDeskDSL.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dataWebDeskDSL.ecore#//TypeText">
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeText/txt"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeText/doc"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeText/docx"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dataWebDeskDSL.ecore#//TypeAudio">
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeAudio/mp3"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeAudio/wav"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeAudio/wma"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dataWebDeskDSL.ecore#//TypeImage">
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeImage/png"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeImage/jpg"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeImage/gif"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dataWebDeskDSL.ecore#//TypeVideo">
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeVideo/mp4"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeVideo/avi"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeVideo/mkv"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dataWebDeskDSL.ecore#//TypeSocialMedia">
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeSocialMedia/Facebook"/>
+      <genEnumLiterals ecoreEnumLiteral="dataWebDeskDSL.ecore#//TypeSocialMedia/Twitter"/>
+    </genEnums>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//Rol">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Rol/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Rol/access"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Rol/numeroPaginasAccesibles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Rol/numeroEntidadesAccesibles"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//NormalPage"/>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//CreatePage"/>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//MainPage"/>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//DetailPage"/>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//DeletePage"/>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//CRUDPage">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//CRUDPage/entity"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//IndexPage"/>
+    <genClasses image="false" ecoreClass="dataWebDeskDSL.ecore#//Page">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Page/pagesReferences"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Page/socialMedias"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Page/title"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Page/mannagment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Page/pagesexternal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Page/multimedias"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//SocialMedia">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//SocialMedia/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//SocialMedia/user"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//WebSite">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//WebSite/pages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//WebSite/roles"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//WebSite/entities"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//WebSite/datatype"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//WebSite/paginasMediasAccesibles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//WebSite/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//Entity">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Entity/attributes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Entity/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Entity/entitiesReferences"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Entity/primarykey"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Entity/crudpages"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//Attribute">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataWebDeskDSL.ecore#//Attribute/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Attribute/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Attribute/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Attribute/maxValues"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//DataType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//DataType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//PageExternal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//PageExternal/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//PageExternal/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dataWebDeskDSL.ecore#//Multimedia">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Multimedia/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//Text">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Text/extension"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//Video">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Video/extension"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//Audio">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Audio/extension"/>
+    </genClasses>
+    <genClasses ecoreClass="dataWebDeskDSL.ecore#//Image">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataWebDeskDSL.ecore#//Image/extension"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,7 @@
+# Tracing options for the DataWebDeskDSL.diagram plug-in
+
+# Common issues
+DataWebDeskDSL.diagram/debug=false
+
+# Visual IDs
+DataWebDeskDSL.diagram/debug/visualID=false

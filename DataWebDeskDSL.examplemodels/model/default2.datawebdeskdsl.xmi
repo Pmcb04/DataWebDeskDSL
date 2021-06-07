@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataWebDeskDSL:WebSite xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:dataWebDeskDSL="http://www.example.org/dataWebDeskDSL" 
+xsi:schemaLocation="http://www.example.org/dataWebDeskDSL ../../DataWebDeskDSL/metamodel/dataWebDeskDSL.ecore"
+name="">
+  <pages xsi:type="dataWebDeskDSL:MainPage" pagesReferences="//@pages.1 //@pages.2 //@pages.5" title="Home">
+    <multimedias xsi:type="dataWebDeskDSL:Image" name="universidad"/>
+    <multimedias xsi:type="dataWebDeskDSL:Text" name="universidad"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:IndexPage" pagesReferences="//@pages.2 //@pages.4 //@pages.3" title="titulo" mannagment="//@roles.0 //@roles.1" entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:CreatePage" title="titulo" mannagment="//@roles.0 //@roles.1" entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:DeletePage" title="titulo" mannagment="//@roles.0 //@roles.1" entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:DetailPage" title="titulo" mannagment="//@roles.0 //@roles.1" entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:CRUDPage" title="asignatura" mannagment="//@roles.0 //@roles.1 //@roles.2" entity="//@entities.1">
+    <socialMedias name="Twitter" user="unex"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:CRUDPage" title="alumno" mannagment="//@roles.0" entity="//@entities.2"/>
+  <pages xsi:type="dataWebDeskDSL:CRUDPage" title="matricula" mannagment="//@roles.0 //@roles.1" entity="//@entities.3">
+    <pagesexternal url="http://www.unex.es" name="Unex"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:NormalPage" title="info_matricula" mannagment="//@roles.0 //@roles.1 //@roles.2"/>
+  <roles name="Rector" access="//@pages.1 //@pages.2 //@pages.4 //@pages.3 //@pages.7 //@pages.8 //@pages.5 //@pages.6"/>
+  <roles name="Director" access="//@pages.7 //@pages.8 //@pages.1 //@pages.2 //@pages.4 //@pages.3 //@pages.5"/>
+  <roles name="Alumno" access="//@pages.5 //@pages.8"/>
+  <entities name="Titulo" primarykey="//@entities.0/@attributes.0" crudpages="//@pages.1 //@pages.2 //@pages.3 //@pages.4">
+    <attributes type="//@datatype.0" name="nombre_titulo"/>
+    <attributes type="//@datatype.1" name="creditos"/>
+  </entities>
+  <entities name="Asignatura" entitiesReferences="//@entities.0" primarykey="//@entities.1/@attributes.0" crudpages="//@pages.5">
+    <attributes type="//@datatype.0" name="nombre_asignatura"/>
+    <attributes type="//@datatype.1" name="Semestre"/>
+    <attributes type="//@datatype.0" name="obligatoria"/>
+  </entities>
+  <entities name="Alumno" primarykey="//@entities.2/@attributes.0" crudpages="//@pages.6">
+    <attributes type="//@datatype.0" name="nombre_alumno"/>
+    <attributes type="//@datatype.0" name="evaluacion_continua"/>
+    <attributes type="//@datatype.1" name="edad"/>
+  </entities>
+  <entities name="Matricula" entitiesReferences="//@entities.1 //@entities.2" primarykey="//@entities.3/@attributes.0" crudpages="//@pages.7">
+    <attributes type="//@datatype.0" name="nombre_matricula"/>
+  </entities>
+  <datatype name="String"/>
+  <datatype name="int"/>
+</dataWebDeskDSL:WebSite>

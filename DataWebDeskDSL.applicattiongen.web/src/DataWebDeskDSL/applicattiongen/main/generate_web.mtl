@@ -1,0 +1,495 @@
+[comment encoding = UTF-8 /]
+[module generate_web('http://www.example.org/dataWebDeskDSL')]
+
+[comment Estructura head de una página web/]
+[template public basicStruct(title : String)]
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<title>[title/]</title>
+	
+		<!-- Autores : Pedro Miguel Carmona Broncano && Ruben Marin Lucas -->
+		<!-- Proyecto de la asignatura DMSS -->
+	
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
+	</head>
+[/template]
+
+[comment Titulo h1/]
+[template public h1(title : String)]
+<h1>[title/]</h1>
+[/template]
+
+[comment Titulo h2/]
+[template public h2(title : String)]
+<h2>[title/]</h2>
+[/template]
+
+[comment Titulo h3/]
+[template public h3(title : String)]
+<h3>[title/]</h3>
+[/template]
+
+[comment Titulo h4/]
+[template public h4(title : String)]
+<h4>[title/]</h4>
+[/template]
+
+[comment Titulo h5/]
+[template public h5(title : String)]
+<h5>[title/]</h5>
+[/template]
+
+[comment Titulo h6/]
+[template public h6(title : String)]
+<h6>[title/]</h6>
+[/template]
+
+[comment Parrafo p con atributo clase/]
+[template public p( class : String, content : String)]
+<p class="[class/]">[content/]</p>
+[/template]
+
+[comment span Material Icon/]
+[template public spanMaterial(link: String , content : String)]
+<a href ="[link/]"><span class="material-icons-outlined">[content/]</span></a>
+[/template]
+
+[comment Link a pagina interna/]
+[template public a( path : String, rol : String, archive : String, content : String)]
+<a href="[path/]/[rol/]/[archive/]">[content/]</a>
+[/template]
+
+[comment Link a pagina externo/]
+[template public a( path : String, content : String)]
+<a href="[path/]">[content/]</a>
+[/template]
+
+[comment Input html/]
+[template public input( class : String, type : String, name : String)]
+<input class="[class/]" type="[type/]" name="[name/]"/>
+[/template]
+
+[comment Input html/]
+[template public inputOff( class : String, type : String, name : String, value : String)]
+<input disabled class="[class/]" type="[type/]" name="[name/]" value="[value/]"/>
+[/template]
+
+[comment Button html/]
+[template public buttton( class : String, type : String, click : String , content : String)]
+<button class="[class/]" onClick="[click/]" type="[type/]">[content/]</button>
+[/template]
+
+[comment Generar url de perfil de red social/]
+[template public nameSocialMedia(sm : SocialMedia)]
+[if (sm.name = TypeSocialMedia::Twitter)]
+	
+	<a href="https://twitter.com/intent/tweet?button_hashtag=[sm.user/]&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">
+		Tweet #[sm.user/]</a>
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+[elseif(sm.name = TypeSocialMedia::Facebook)]
+	
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v10.0" nonce="tNlPojXC"></script>
+	
+	<div class="fb-page" data-href="https://www.facebook.com/[sm.user/]" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
+[/if]
+[/template]
+
+[comment Generador de info RedeSociales/]
+[template public generateRRSS(socialMedias : SocialMedia)]
+<ul>
+[for (sm : SocialMedia | socialMedias)]
+	<li>[nameSocialMedia(sm)/]</li>
+[/for]
+</ul>
+[/template]
+
+[comment Generador de info PaginasExternas/]
+[template public generateWebExternal(pagesExternal : PageExternal)]
+<ul>
+[for (pageExt : PageExternal | pagesExternal)]
+	<li>[a(pageExt.url, pageExt.name)/]</li>
+[/for]
+</ul>
+[/template]
+
+[comment Generador de multimedia/]
+[template public generateMultimedia(multimedia : Multimedia)]
+<ul>
+[for (mult : Multimedia | multimedia)]
+	<li>[mult.name/]</li>
+[/for]
+</ul>	
+[/template]
+
+[comment Genera la parte superior de la página web, redes sociales y web externas/]
+[template public generateHeadPage(page : CRUDPage, rol : Rol, title : String)]
+[h1('Pantalla de ' + title + ' de ' + '[' + page.entity.name.toLowerCase()+ ']' + ' Rol ' + '[' + rol.name + ']')/]
+
+[if (page.socialMedias->size() > 0)]
+[h2('Redes Sociales: ')/]
+[page.socialMedias.generateRRSS()/]
+[/if]
+
+[if (page.pagesexternal->size() > 0)]	
+[h2('Paginas externas: ')/]
+[page.pagesexternal.generateWebExternal()/]
+[/if]
+
+[if (page.multimedias->size() > 0)]	
+[h2('Multimedias: ')/]
+[page.multimedias.generateMultimedia()/]
+[/if]
+[/template]
+
+[comment  Parte común de la pagina Create/]
+[template public generatePageCreateCommon(page : CRUDPage, rol : Rol)]
+[basicStruct('create ' + page.title)/]
+	
+	<body>
+		
+		[page.generateHeadPage(rol, 'creación')/]
+	
+		[h3('Introduzca la información correspondiente a los siguientes campos:')/]
+		
+		<form>
+
+			[for (attr : Attribute | page.entity.attributes)]
+			[p('name_attr', attr.name.toString())/]
+			[input('input', 'text', attr.name.toString())/]
+
+			[/for]
+
+			[for (entity : Entity | page.entity.entitiesReferences)]
+			[p('name_attr', 'id_' + entity.name  + ': ' + entity.primarykey.name.toString())/]
+			[input('input', 'text', entity.primarykey.name.toString())/]
+
+			[/for]
+	
+			[buttton('back_button', 'button', 'window.history.back();', 'Cancelar')/]
+			[buttton('accept_button', 'submit', 'window.history.back();', 'Añadir')/]
+	
+		</form>
+	
+	</body>
+</html>
+[/template]
+
+[comment  Parte común de la pagina Delete/]
+[template public generatePageDeleteCommon(page : CRUDPage, rol : Rol)]
+[basicStruct('borrado ' + page.title)/]
+	
+	<body>
+	
+		[page.generateHeadPage(rol, 'borrado')/]
+	
+		[h3('Listado de : [' + page.entity.name + ']')/]
+	
+		<table cellpadding="2" border = "1"> 
+			<tr>	
+				<td>Nombre entidad</td>
+				<td>Valor entidad </td>
+				<td></td>
+			</tr>	
+			[for (entity : Entity | page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name))]
+			<tr>	
+				<td>[entity.name/]</td>
+				<td>[entity.primarykey.value/]</td>
+				<td>[spanMaterial('../' + rol.name + '/delete_' + page.entity.name.toLowerCase() + '_check.html', 'delete')/]</td>
+			</tr>	
+			[/for]
+		</table>
+	
+		[buttton('back_button', 'button', 'window.history.back();', 'Volver')/]
+	
+	</body>
+</html>
+[/template]
+
+[comment  Parte común de la pagina Delete Check/]
+[template public generatePageDeleteCheckCommon(page : CRUDPage, rol : Rol)]
+[basicStruct('borrado ' + page.title)/]
+	
+	<body>
+	
+		[page.generateHeadPage(rol, 'borrado')/]
+	
+		[h3('La entidad ' + page.entity.name + ' con identificación ' + page.entity.primarykey.name + ' = ' +  page.entity.primarykey.value + ' se eliminó satisfactoriamente.')/]
+	
+		[if (page.entity.entitiesReferences -> size() > 0)]
+		[h4('Nota: No se eliminaron los datos correspondiente a las referencias de la ' + page.entity.name + ':')/]
+		[for (entity : Entity | page.entity.entitiesReferences)]
+		[p('name_attr', 'id_' + entity.name  + ': ' + entity.primarykey.name.toString())/]
+		[inputOff('input', 'text', entity.primarykey.name.toString(), entity.primarykey.value)/]
+
+		[/for]
+		[/if]
+
+		[buttton('back_button', 'button', 'window.history.back();', 'Volver')/]
+	
+	</body>
+</html>
+[/template]
+
+[comment  Parte común de la pagina Detail/]
+[template public generatePageDetailCommon(page : CRUDPage, rol : Rol)]
+[basicStruct('detalles ' + page.title)/]
+	
+	<body>
+	
+		[page.generateHeadPage(rol, 'detalles')/]
+	
+		[h3('Campos: ')/]
+	
+		[for (attr : Attribute | page.entity.attributes)]
+		[p('name_attr', attr.name.toString())/]
+		[inputOff('input', 'text', attr.name.toString(), attr.value.toString())/]
+
+		[/for]
+
+		[for (attr : Attribute | page.entity.entitiesReferences.primarykey)]
+		[p('name_attr', attr.name.toString())/]
+		[inputOff('input', 'text', attr.name.toString(), attr.value.toString())/]
+
+		[/for]
+	
+		[buttton('back_button', 'button', 'window.history.back();', 'Volver')/]
+	
+	</body>
+</html>
+[/template]
+
+[comment  Parte común de la pagina Index/]
+[template public generatePageIndexCommon(page : CRUDPage, rol : Rol)]
+[basicStruct('create ' + page.title)/]
+	
+	<body>
+	
+		[page.generateHeadPage(rol, 'índice')/]
+	
+		[h3('Listado de : [' + page.entity.name + ']')/]
+	
+		<table cellpadding="2" border = "1"> 
+			<tr>	
+				<td>Nombre entidad</td>
+				<td>Valor entidad </td>
+				<td></td>
+			</tr>	
+			[for (entity : Entity | page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name))]
+			<tr>	
+				<td>[entity.name/]</td>
+				<td>[entity.primarykey.value/]</td>
+				<td>[spanMaterial('../' + rol.name + '/detail_' + page.entity.name.toLowerCase() + '.html', 'visibility')/]</td>
+			</tr>	
+			[/for]
+		</table>
+	
+		[buttton('back_button', 'button','window.history.back();', 'Volver')/]
+		
+	</body>
+</html>
+[/template]
+
+[comment Generador de pagina NormalPage/]
+[template public generatePage(page : NormalPage, rol : Rol)]
+[file (rol.name + '/' + page.title + '.html', false, 'UTF-8')]
+[basicStruct('detalle ' + page.title)/]
+
+	<body>
+	
+		[h1('Pantalla ' + page.title  + ' Rol ' + '[' + rol.name + ']')/]
+		
+		[if (page.socialMedias->size() > 0)]
+		[h2('Redes Sociales: ')/]
+		[page.socialMedias.generateRRSS()/]
+		[/if]
+		
+		[if (page.pagesexternal->size() > 0)]	
+		[h2('Paginas externas: ')/]
+		[page.pagesexternal.generateWebExternal()/]
+		[/if]
+
+		[if (page.multimedias->size() > 0)]	
+		[h2('Multimedias: ')/]
+		[page.multimedias.generateMultimedia()/]
+		[/if]
+
+		[buttton('back_button', 'button', 'window.history.back();', 'Volver')/]
+	
+	</body>
+</html>
+[/file]
+[/template]
+
+[comment Generador de pagina CRUDPage/]
+[template public generatePage(page : CRUDPage, rol : Rol)]
+[file (rol.name + '/' + 'crud_' + page.entity.name.toLowerCase() + '.html', false, 'UTF-8')]
+[basicStruct('detalle ' + page.title)/]
+
+	<body>
+	
+		[page.generateHeadPage(rol, 'detalle')/]
+	
+		<ul>
+			<li>[a('..', rol.name, 'index_' + page.entity.name.toLowerCase() + '.html', 'Listar')/]</li>
+			<li>[a('..', rol.name, 'create_' + page.entity.name.toLowerCase() + '.html', 'Crear nuevo elemento')/]</li>
+			<li>[a('..', rol.name, 'delete_' + page.entity.name.toLowerCase() + '.html','Borrar un elemento')/]</li>
+		</ul>	
+	
+		[buttton('back_button', 'button', 'window.history.back();', 'Volver')/]
+	
+	</body>
+</html>
+[/file]
+
+[file (rol.name + '/' + 'create_' + page.entity.name.toLowerCase() + '.html', false, 'UTF-8')]
+[generatePageCreateCommon(page, rol)/]
+[/file]
+
+[file (rol.name + '/' + 'delete_' + page.entity.name.toLowerCase() + '.html', false, 'UTF-8')]
+[generatePageDeleteCommon(page, rol)/]
+[/file]
+
+[file (rol.name + '/' + 'delete_' + page.entity.name.toLowerCase() + '_check.html', false, 'UTF-8')]
+[generatePageDeleteCheckCommon(page, rol)/]
+[/file]
+
+[file (rol.name + '/' + 'index_' + page.entity.name.toLowerCase() + '.html', false, 'UTF-8')]
+[generatePageIndexCommon(page, rol)/]
+[/file]
+
+[file (rol.name + '/' + 'detail_' + page.entity.name.toLowerCase() + '.html', false, 'UTF-8')]
+[generatePageDetailCommon(page, rol)/]
+[/file]
+
+[/template]
+
+[comment Generador de pagina CreatePage/]
+[template public generatePage(page : CreatePage, rol : Rol)]
+[file (rol.name + '/' + archiveCRUD(page), false, 'UTF-8')]
+[generatePageCreateCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Generador de pagina DeletePage/]
+[template public generatePage(page : DeletePage, rol : Rol)]
+[file (rol.name + '/' + archiveCRUD(page), false, 'UTF-8')]
+[generatePageDeleteCommon(page, rol)/]
+[/file]
+
+[file(rol.name + '/' + 'delete_' + page.entity.name.toLowerCase() + '_check.html', false, 'UTF-8')]
+[generatePageDeleteCheckCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Generador de pagina DetailPage/]
+[template public generatePage(page : DetailPage, rol : Rol)]
+[file (rol.name + '/' + archiveCRUD(page), false, 'UTF-8')]
+[generatePageDetailCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Generador de pagina IndexPage/]
+[template public generatePage(page : IndexPage, rol : Rol)]
+[file (rol.name + '/' + archiveCRUD(page), false, 'UTF-8')]
+[generatePageIndexCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Titulo de opción de la pagina CRUD/]
+[template public titlePageCRUD(page : CRUDPage)]
+[if (page.oclIsTypeOf(DetailPage))] Detalles
+[elseif (page.oclIsTypeOf(IndexPage))] Índice
+[elseif (page.oclIsTypeOf(DeletePage))] Borrar
+[elseif (page.oclIsTypeOf(CreatePage))] Crear
+[elseif (page.oclIsTypeOf(CRUDPage))] CRUD
+[/if]
+[/template]
+
+[comment Nombre del archivo CRUD/]
+[template public archiveCRUD(page : CRUDPage)]
+[if (page.oclIsTypeOf(DetailPage))]detail_[page.entity.name.toLowerCase()/].html
+[elseif(page.oclIsTypeOf(IndexPage))]index_[page.entity.name.toLowerCase()/].html
+[elseif(page.oclIsTypeOf(DeletePage))]delete_[page.entity.name.toLowerCase()/].html
+[elseif(page.oclIsTypeOf(CreatePage))]create_[page.entity.name.toLowerCase()/].html
+[elseif(page.oclIsTypeOf(CRUDPage))]crud_[page.entity.name.toLowerCase()/].html
+[/if]
+[/template]
+
+[comment Listado de las páginas que tiene acceso el rol/]
+[template public rolesCRUDPages(pages : Set(CRUDPage), rol : Rol)]
+<ul>
+[for (page : CRUDPage | pages)]
+	<li>[a('..', rol.name, archiveCRUD(page), '[' + page.entity.name + ']' + titlePageCRUD(page))/]</li>
+[/for]
+</ul>
+[comment Generamos todas la páginas que tiene acceso al rol/]
+[pages.generatePage(rol)/]
+[/template]
+
+[comment Listado de las páginas normales que tiene acceso el rol/]
+[template public rolesNormalPages(pages : Set(NormalPage), rol : Rol)]
+<ul>
+[for (page : NormalPage | pages)]
+	<li>[a('../' + rol.name + '/' + page.title + '.html', page.title)/]</li>
+[/for]
+</ul>
+[comment Generamos todas la páginas que tiene acceso al rol/]
+[pages.generatePage(rol)/]
+[/template]
+
+[template public generateWebsite(aWebSite : WebSite)]
+[comment @main/]
+[file ('main.html', false, 'UTF-8')]
+[basicStruct(aWebSite.name)/]
+	
+	<body>
+	
+		[h1('Nombre de la aplicación ' +  aWebSite.name)/]
+		
+		[h2('Roles de acceso a la información: ')/]
+		
+		<ul>
+		[for (rol : Rol | roles)]
+			<li>[a('.', rol.name, 'main.html', rol.name)/]</li>
+		[/for]
+		</ul>
+	
+	</body>
+</html>
+[/file]
+
+[aWebSite.roles.rolesPages()/]
+[/template]
+
+[template public rolesPages(rol : Rol)]
+
+[file (rol.name + '/main.html', false, 'UTF-8')]
+[basicStruct(rol.name)/]
+	
+	<body>
+	
+		[h1('Pantalla principal del Rol ['  + rol.name + ']')/]
+		[h2('Listado de páginas a las que tiene acceso : ')/]
+	
+		[rolesCRUDPages(rol.access->selectByKind(CRUDPage), rol)/]
+		[rolesNormalPages(rol.access->selectByKind(NormalPage), rol)/]
+	
+		[buttton('accept_button', 'button','window.history.back();', 'Volver')/]
+	
+	</body>
+</html>
+
+[/file]
+
+[/template]
+
+
+
+
+
+
+

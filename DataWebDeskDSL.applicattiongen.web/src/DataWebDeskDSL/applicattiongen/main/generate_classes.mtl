@@ -1,0 +1,84 @@
+[comment encoding = UTF-8 /]
+[module generate_classes('http://www.example.org/dataWebDeskDSL')]
+
+[template public generateClases(ws : WebSite)]
+[comment @main /]
+[ws.entities.generaClase()/]
+[/template]
+
+[template public generaClase(c : Entity)]
+[file ('/model/' + c.name+'.java', false, 'UTF-8')]
+/*
+	Autores : Pedro Miguel Carmona Broncano && Ruben Marin Lucas
+	Proyecto de la asignatura DMSS
+*/
+
+package model;
+
+import java.util.Random;
+
+public class [c.name/]
+{
+
+	[comentario('Instance Variables')/]
+	[for (a: Attribute | c.attributes)]
+		private [a.type.name/][if (a.maxValues > 1)] ['['/][']'/][/if] [a.name/];
+	[/for]
+	[for (a: Attribute | c.entitiesReferences.primarykey)]
+		private [a.type.name/][if (a.maxValues > 1)] ['['/][']'/][/if] [a.name/];
+	[/for]
+
+	[comentario('Constructores')/]
+		public [c.name/](){
+		}
+
+		public [c.name/]([for (a: Attribute | c.attributes) separator (',')][a.type.name/][if (a.maxValues > 1)] ['['/][']'/][/if] [a.name/][/for]){
+		[for (a: Attribute | c.attributes)]
+			this.[a.name/] = [a.name/];
+		[/for]
+		}
+
+	[comentario('Getters & Setters')/]
+	[for (a: Attribute | c.attributes)]
+		public [a.type.name/][if (a.maxValues > 1)] ['['/][']'/][/if] get[a.name.toUpperFirst()/](){
+			return [a.name.toLowerCase()/];
+		}
+
+		public void set[a.name.toUpperFirst()/]([a.type.name/][if (a.maxValues > 1)]['['/][']'/] [/if] [a.name.toLowerCase()/]){
+			this.[a.name.toLowerCase()/] = [a.name.toLowerCase()/]; 
+		}
+
+	[/for]
+	[for (a: Attribute | c.entitiesReferences.primarykey)]
+		public [a.type.name/][if (a.maxValues > 1)] ['['/][']'/][/if] get[a.name.toUpperFirst()/](){
+			return [a.name.toLowerCase()/];
+		}
+
+		public void set[a.name.toUpperFirst()/]([a.type.name/][if (a.maxValues > 1)]['['/][']'/] [/if] [a.name.toLowerCase()/]){
+			this.[a.name.toLowerCase()/] = [a.name.toLowerCase()/]; 
+		}
+
+	[/for]
+
+	[comentario('Method toString()')/]
+		public String toString(){
+			return 	[for (a: Attribute | c.attributes) separator ('+')]"[a.name/]:" + this.[a.name/][if (a.maxValues > 1)].toString()[/if]+ "\n"[/for][if (c.entitiesReferences.primarykey ->size() > 0)] + [for (a: Attribute | c.entitiesReferences.primarykey) separator ('+')]"[a.name/]:" + this.[a.name/][if (a.maxValues > 1)].toString()[/if]+ "\n"[/for] [/if];
+		}
+
+	[comentario('Method random()')/]
+		public void random(){
+		Random random = new Random();
+		[for (a: Attribute | c.attributes)]
+			this.[a.name/][if (a.maxValues > 1)]['['/]0[']'/][/if] = [if (a.type.name = 'String')]"prueba_[a.name/]"[else]random.next[a.type.name.toUpperFirst()/]()[/if];
+		[/for]
+		}
+
+}
+[/file]
+[/template]
+
+[template public comentario(arg : String)]
+//-------------------------------------------------------------------------------------
+// [arg/]
+//-------------------------------------------------------------------------------------
+[/template]

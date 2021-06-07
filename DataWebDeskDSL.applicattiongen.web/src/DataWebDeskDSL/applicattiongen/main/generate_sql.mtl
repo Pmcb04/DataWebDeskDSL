@@ -1,0 +1,27 @@
+[comment encoding = UTF-8 /]
+[module generate_sql('http://www.example.org/dataWebDeskDSL')]
+
+[template public generateClases(ws : WebSite)]
+[comment @main /]
+[file ('dataBase.sql', false, 'UTF-8')]
+[ws.entities.createTable()/]
+[/file]
+
+[/template]
+
+[template public createTable(e : Entity)]
+
+CREATE TABLE [e.name/](
+[for (a : Attribute | e.attributes)]
+	[if (a.name = e.primarykey.name)]id_[/if][a.name/] [if (a.type.name.toLowerCase() = 'string')]VARCHAR2(255)[else][a.type.name.toUpperCase()/][/if][if (a.name = e.primarykey.name)] NOT NULL[/if],
+[/for]
+[for (ref : Entity | e.entitiesReferences)]
+	[ref.name.toLowerCase()/] VARCHAR2(255) NOT NULL,
+[/for]
+	PRIMARY KEY (id_[e.primarykey.name/])
+[for (ref : Entity | e.entitiesReferences)]
+	CONSTRAINT PK_[ref.name.toUpperFirst()/] PRIMARY KEY (id_[ref.primarykey.name/], [ref.name.toLowerCase()/])
+[/for]
+);
+
+[/template]

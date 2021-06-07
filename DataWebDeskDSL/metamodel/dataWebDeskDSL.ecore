@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dataWebDeskDSL" nsURI="http://www.example.org/dataWebDeskDSL"
+    nsPrefix="dataWebDeskDSL">
+  <eAnnotations source="gmf"/>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Rol">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/rol.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Rol"/>
+      <details key="Description" value="Permite diferenciar los distintos tipos de usuarios de la aplicación. Cada rol debe definir de forma obligatoria el atributo name. Además debe tener acceso de 1 a más páginas"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="access" lowerBound="1"
+        upperBound="-1" eType="#//Page" eOpposite="#//Page/mannagment">
+      <eAnnotations source="gmf.link">
+        <details key="source" value="access"/>
+        <details key="target" value="mannagment"/>
+        <details key="style" value="dot"/>
+        <details key="width" value="2"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="access"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numeroPaginasAccesibles"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="if (self.access ->oclIsUndefined()) then 0&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else self.access -> size()&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numeroEntidadesAccesibles"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="if (self.access->selectByKind(CRUDPage).entity->oclIsUndefined()) then 0&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else self.access->selectByKind(CRUDPage).entity->asSet() -> size()&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NormalPage" eSuperTypes="#//Page">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="207,89,25"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="NormalPage"/>
+      <details key="Description" value="Páginas de tipo normal representadas en el modelo. "/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CreatePage" eSuperTypes="#//CRUDPage">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="207,204,25"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="CreatePage"/>
+      <details key="Description" value="Páginas de tipo create representadas en el modelo. "/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MainPage" eSuperTypes="#//Page">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="92,25,207"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="MainPage"/>
+      <details key="Description" value="Páginas de tipo main representadas en el modelo. "/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DetailPage" eSuperTypes="#//CRUDPage">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="25,55,207"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="DetailPage"/>
+      <details key="Description" value="Páginas de tipo detail representadas en el modelo. "/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeletePage" eSuperTypes="#//CRUDPage">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="207,25,25"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="DeletePage"/>
+      <details key="Description" value="Páginas de tipo delete representadas en el modelo. "/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CRUDPage" eSuperTypes="#//Page">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="207,25,140"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="CRUDPage"/>
+      <details key="Description" value="Páginas de tipo CRUD representadas en el modelo. Está relacionado con alguna entidad (Entity).  Es superclase de DetailPage, DeletePage, IndexPage y  CreatePage."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entity" lowerBound="1"
+        eType="#//Entity" eOpposite="#//Entity/crudpages">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Name" value="entity"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IndexPage" eSuperTypes="#//CRUDPage">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="25,207,94"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="IndexPage"/>
+      <details key="Description" value="Páginas de tipo index representadas en el modelo. "/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Page" abstract="true">
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Page"/>
+      <details key="Description" value="Paginas representadas en el modelo. Cada página está compuesta de calquier número de redes sociales (SocialMedia), páginas externas (PageExternal) y archivos multimedia (Multimedia). Además debe definir el atributo name y puede tener cualquier número de referencias a otras páginas o a ella misma. Es superclase abstracta de MainPage, NormalPage y CRUDPage"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pagesReferences" upperBound="-1"
+        eType="#//Page">
+      <eAnnotations source="gmf.link">
+        <details key="target.decoration" value="arrow"/>
+        <details key="style" value="dash"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="pagesReferences"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="socialMedias" upperBound="-1"
+        eType="#//SocialMedia" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="socialMedias"/>
+        <details key="Type" value="composition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="title"/>
+        <details key="Type" value="EString"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mannagment" upperBound="-1"
+        eType="#//Rol" eOpposite="#//Rol/access">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="mannagment"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pagesexternal" upperBound="-1"
+        eType="#//PageExternal" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="pagesexternal"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multimedias" upperBound="-1"
+        eType="#//Multimedia" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="multimedia"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SocialMedia">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/redes-sociales.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Social Media"/>
+      <details key="Description" value="Redes sociales modeladas en el sistema. De forma obligatoria debe definir los atributos user y name."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="#//TypeSocialMedia">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="TypeSocialMedia"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="user" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="user"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WebSite">
+    <eAnnotations source="gmf.diagram">
+      <details key="label" value="name"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="one_sm one_home no_pages_alone"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="one_sm" value="pages.socialMedias -> size() >= 1"/>
+      <details key="one_home" value="pages->selectByType(MainPage)->select(mannagment->size() = 0) -> size() = 1"/>
+      <details key="no_pages_alone" value="self.roles.access->asSet()->size()+1 = self.pages->size() "/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Authors" value="Pedro Miguel Carmona Broncano &amp; Rubén Marín Lucas"/>
+      <details key="Last Updated" value="28/05/2021"/>
+      <details key="Name" value="WebSite"/>
+      <details key="Description" value="Sitio web representado en el modelo. Está compuesto por una o varias entidades (Entity), por una o varias páginas (Page) y por cualquier número de páginas (Page), roles (Roles) y tipos de dato (DataType). Define de forma obligatoria el atributo name."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pages" lowerBound="1" upperBound="-1"
+        eType="#//Page" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="pages"/>
+        <details key="Type" value="composition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="roles" upperBound="-1"
+        eType="#//Rol" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="roles"/>
+        <details key="Type" value="composition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entities" lowerBound="1"
+        upperBound="-1" eType="#//Entity" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="entities"/>
+        <details key="Type" value="composition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="datatype" upperBound="-1"
+        eType="#//DataType" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="dataType"/>
+        <details key="Type" value="composition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paginasMediasAccesibles"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="if (self.roles->size() = 0) then 0&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; else (self.roles.numeroPaginasAccesibles -> sum() / self.roles -> size())&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; endif"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="border.width" value="3"/>
+      <details key="border.color" value="25,204,207"/>
+      <details key="border.style" value="solid"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="no_myself no_other_references no_more_CRUD index_details_together"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="no_myself" value="entitiesReferences->excludes(self) "/>
+      <details key="no_other_references" value="entitiesReferences.entitiesReferences->excludes(self) "/>
+      <details key="no_more_CRUD" value="crudpages->selectByType(CRUDPage)->size() = 1 implies crudpages->size() = 1"/>
+      <details key="index_details_together" value="&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;((crudpages->selectByType(IndexPage)->size() = 1 implies crudpages->selectByType(DetailPage)->size() = 1) &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;and  (crudpages->selectByType(DetailPage)->size() = 1  implies crudpages->selectByType(IndexPage)->size() = 1))"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Entity"/>
+      <details key="Description" value="Represenata a los datos que pueden incluir las distintas páginas. Está relacionada con 1 o más páginas crud, además de referenciar a cualquier numero de entidades y tener un primary key. Debe definir de forma obligatoria un name. Cada entity está compuesta  por uno o más atributos.  "/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" lowerBound="1"
+        upperBound="-1" eType="#//Attribute" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="collapsible" value="true"/>
+        <details key="layout" value="free"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="attributes"/>
+        <details key="Type" value="composition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entitiesReferences" upperBound="-1"
+        eType="#//Entity">
+      <eAnnotations source="gmf.link">
+        <details key="target.decoration" value="arrow"/>
+        <details key="style" value="dash"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="0"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="entitiesReferences"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="primarykey" lowerBound="1"
+        eType="#//Attribute">
+      <eAnnotations source="gmf.link">
+        <details key="target.decoration" value="arrow"/>
+        <details key="style" value="dash"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Name" value="primarykey"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="crudpages" lowerBound="1"
+        upperBound="-1" eType="#//CRUDPage" eOpposite="#//CRUDPage/entity">
+      <eAnnotations source="gmf.link">
+        <details key="source" value="crudpages"/>
+        <details key="target" value="entity"/>
+        <details key="style" value="dot"/>
+        <details key="width" value="2"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="*"/>
+        <details key="Name" value="crudpages"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Attribute">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/atributo.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Attribute"/>
+      <details key="Description" value="Permite definir los atributos de las entidades. Define de froma obligatoria los atributos name, value y maxvalues. Además está relacionado con un tipo (type)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//DataType">
+      <eAnnotations source="gmf.link">
+        <details key="target.decoration" value="arrow"/>
+        <details key="style" value="dash"/>
+      </eAnnotations>
+      <eAnnotations source="MyDSLDoc">
+        <details key="Upper bound" value="1"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Name" value="trype"/>
+        <details key="Type" value="reference"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="value"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxValues" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="maxValues"/>
+        <details key="Type" value="EInt"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataType">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/datatype.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Entity"/>
+      <details key="Description" value="Permite definir el tipo de datos de los atributos. Define de forma obligatoria el atributo name."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PageExternal">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/url.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="PageExternal"/>
+      <details key="Description" value="Páginas externas modeladas en el sistema. De forma obligatoria debe definir los atributos url y name."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="url"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Multimedia" abstract="true">
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Multimedia"/>
+      <details key="Description" value="Representa a los distintos datos que pueden contener las páginas. Define de forma obligatoria el atributo name. Es una superclase abstracta de Text, Video, Audio e Image"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="name"/>
+        <details key="Type" value="EString"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Text" eSuperTypes="#//Multimedia">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/file.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Multimedia"/>
+      <details key="Description" value="Elemento de tipo texto representado en el modelo. "/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extension" lowerBound="1"
+        eType="#//TypeText">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="extension"/>
+        <details key="Type" value="TypeText"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Video" eSuperTypes="#//Multimedia">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/video.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Video"/>
+      <details key="Description" value="Elemento de tipo video representado en el modelo."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extension" lowerBound="1"
+        eType="#//TypeVideo">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="extension"/>
+        <details key="Type" value="TypeText"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Audio" eSuperTypes="#//Multimedia">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/audio.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Audio"/>
+      <details key="Description" value="Elemento de tipo audio representado en el modelo."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extension" lowerBound="1"
+        eType="#//TypeAudio">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="extension"/>
+        <details key="Type" value="TypeText"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//Multimedia">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="label.icon" value="false"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/DataWebDeskDSL/icons/image.svg"/>
+    </eAnnotations>
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="Image"/>
+      <details key="Description" value="Elemento de tipo imagen representado en el modelo."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extension" lowerBound="1"
+        eType="#//TypeImage">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="extension"/>
+        <details key="Type" value="TypeText"/>
+        <details key="Lower bound" value="1"/>
+        <details key="Upper bound" value="1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeText">
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="TypeText"/>
+      <details key="Description" value="Representa el tipo de dato texto en el modelo."/>
+    </eAnnotations>
+    <eLiterals name="txt">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="txt"/>
+        <details key="Value" value="0"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="doc" value="1">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="doc"/>
+        <details key="Value" value="1"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="docx" value="2">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="docx"/>
+        <details key="Value" value="2"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeAudio">
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="TypeAudio"/>
+      <details key="Description" value="Representa el tipo de dato audio en el modelo."/>
+    </eAnnotations>
+    <eLiterals name="mp3">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="mp3"/>
+        <details key="Value" value="0"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="wav" value="1">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="wav"/>
+        <details key="Value" value="1"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="wma" value="2">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="wma"/>
+        <details key="Value" value="2"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeImage">
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="TypeImage"/>
+      <details key="Description" value="Representa el tipo de dato imagen en el modelo."/>
+    </eAnnotations>
+    <eLiterals name="png">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="png"/>
+        <details key="Value" value="0"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="jpg" value="1">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="jpg"/>
+        <details key="Value" value="1"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="gif" value="2">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="gif"/>
+        <details key="Value" value="2"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeVideo">
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="TypeVideo"/>
+      <details key="Description" value="Representa el tipo de dato video en el modelo."/>
+    </eAnnotations>
+    <eLiterals name="mp4">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="mp4"/>
+        <details key="Value" value="0"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="avi" value="1">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="avi"/>
+        <details key="Value" value="1"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="mkv" value="2">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="mkv"/>
+        <details key="Value" value="2"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeSocialMedia">
+    <eAnnotations source="MyDSLDoc">
+      <details key="Name" value="TypeVideo"/>
+      <details key="Description" value="Representa el tipo de dato video en el modelo."/>
+    </eAnnotations>
+    <eLiterals name="Facebook">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="facebook"/>
+        <details key="Value" value="0"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="Twitter" value="1">
+      <eAnnotations source="MyDSLDoc">
+        <details key="Name" value="twitter"/>
+        <details key="Value" value="1"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+</ecore:EPackage>

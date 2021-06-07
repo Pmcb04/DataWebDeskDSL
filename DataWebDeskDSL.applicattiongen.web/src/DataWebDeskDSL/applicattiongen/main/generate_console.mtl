@@ -1,0 +1,664 @@
+[comment encoding = UTF-8 /]
+[module generate_console('http://www.example.org/dataWebDeskDSL')]
+
+[comment Generador de info RedeSociales/]
+[template public generateRRSS(socialMedias : SocialMedia)]
+[for (sm : SocialMedia | socialMedias)]
+System.out.println("[sm.name/] " + "@" + "[sm.user/]");
+[/for]
+[/template]
+
+[comment Generador de info PaginasExternas/]
+[template public generateWebExternal(pagesExternal : PageExternal)]
+[for (pageExt : PageExternal | pagesExternal)]
+System.out.println("[ '[' /][pageExt.name/][ ']' /] " + "url : " + "[pageExt.url/]");
+[/for]
+[/template]
+
+[comment Generador de multimedia/]
+[template public generateMultimedia(multimedia : Multimedia)]
+[for (mult : Multimedia | multimedia)]
+System.out.println("[mult.name/]");
+[/for]
+[/template]
+
+[comment Genera la parte superior de la pantalla de la aplicacion que nos encontremos, redes sociales y web externas/]
+[template public generateHeadPage(page : CRUDPage, rol : Rol, title : String)]
+System.out.println("Pantalla de [title/] de " + "[ '[' /] [page.entity.name.toLowerCase()/] [ ']' /] " + " Rol " + "[ '[' /] [rol.name/] [ ']' /]");
+
+[if (page.socialMedias->oclIsUndefined())]
+[else]
+System.out.println("Redes Sociales: ");
+[page.socialMedias.generateRRSS()/]
+[/if]
+
+[if (page.pagesexternal->oclIsUndefined())]
+[else]
+System.out.println("Paginas externas: ");
+[page.pagesexternal.generateWebExternal()/]
+[/if]
+
+[if (page.multimedias->oclIsUndefined())]
+[else]	
+System.out.println("Multimedias: ");
+[page.multimedias.generateMultimedia()/]
+[/if]
+[/template]
+
+[template public switchCRUD(page : CRUDPage, rol : Rol, link : String)]
+switch(opcion){
+	case 0:
+		[rol.name.toUpperFirst().replaceAll(' ', '')/]Main.screen();
+	break;
+	[for (entity : Entity | page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name))]
+	case [page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name)->indexOf(entity)/]:
+		[link/][entity.name.replaceAll(' ', '').toUpperFirst()/].screen();
+	break;
+	[/for]
+	default:
+	break;
+}
+[/template]
+
+[comment  Parte común de la pagina Create/]
+[template public generatePageCreateCommon(page : CRUDPage, rol : Rol)]
+[comentario(archiveCRUD(page))/]
+
+package view.[rol.name.toUpperFirst().replaceAll(' ', '')/];
+
+import util.Keyin;
+import model.[page.entity.name.toUpperFirst().replaceAll(' ', ' ')/];
+import roles.[rol.name.toUpperFirst().replaceAll(' ', '')/]Main;
+
+public class Create[page.entity.name.replaceAll(' ','').toUpperFirst()/]{
+	public static void screen(){
+
+		System.out.println("\n\n\n\n");
+
+		[page.generateHeadPage(rol, 'creación')/]
+		
+		System.out.println("Introduzca la información correspondiente a los siguientes campos:");
+	
+		[page.entity.name.toUpperFirst().replaceAll(' ', '')/] [page.entity.name.toLowerCase().trim()/] = new  [page.entity.name.toUpperFirst().trim()/]();
+	
+		[comment  Atributos de la entidad /]
+		[for (attr : Attribute | page.entity.attributes)]
+		System.out.println("[attr.name/]:");
+		[if (attr.maxValues > 1)]
+		
+		String [ '[' /][ ']' /] [attr.name/] = Keyin.inString().split(" ");
+		[attr.type.name/][ '[' /][ ']' /] [attr.name/][attr.type.name.toUpperFirst()/] = new [attr.type.name/][ '[' /][attr.name/].length[ ']' /];
+	
+		for (int i = 0; i < nombre.length; i++) {
+			[attr.name/][attr.type.name.toUpperFirst()/][ '[' /]i[ ']' /] = [if (attr.type.name = 'int')]Integer.parseInt([attr.name/][ '[' /]i[ ']' /])[else][attr.name/][ '[' /]i[ ']' /][/if];
+		}
+	
+		[else]
+		[page.entity.name.toLowerCase().replaceAll(' ', '')/].set[attr.name.toUpperFirst()/](Keyin.in[attr.type.name.toUpperFirst()/]([if (attr.type.name = 'String')][else]""[/if]));
+		[/if]
+		[/for]
+	
+		[comment  Atributos primarykey entidades referenciadas /]
+		[for (entity : Entity | page.entity.entitiesReferences)]
+		System.out.println("id_[entity.name/]: [entity.primarykey.name/]:");
+		[if (entity.primarykey.maxValues > 1)]
+		
+		String [ '[' /][ ']' /] [entity.primarykey.name/] = Keyin.inString().split(" ");
+		[entity.primarykey.type.name/][ '[' /][ ']' /] [entity.primarykey.name/][entity.primarykey.type.name.toUpperFirst()/] = new [entity.primarykey.type.name/][ '[' /][entity.primarykey.name/].length[ ']' /];
+	
+		for (int i = 0; i < nombre.length; i++) {
+			[entity.primarykey.name/][entity.primarykey.type.name.toUpperFirst()/][ '[' /]i[ ']' /] = [if (entity.primarykey.type.name = 'int')]Integer.parseInt([entity.primarykey.name/][ '[' /]i[ ']' /])[else][entity.primarykey.name/][ '[' /]i[ ']' /][/if];
+		}
+	
+		[else]
+		[page.entity.name.toLowerCase().replaceAll(' ', '')/].set[entity.primarykey.name.toUpperFirst()/](Keyin.in[entity.primarykey.type.name.toUpperFirst()/]([if (entity.primarykey.type.name = 'String')][else]""[/if]));
+		[/if]
+		[/for]
+				
+		System.out.println("Listado de opciones: ");
+		System.out.println("0.Volver");
+		System.out.println("1.Crear [page.entity.name.toLowerCase()/]");
+				
+		System.out.println();
+		System.out.println("[page.entity.name.toLowerCase().replaceAll(' ', '')/] introducido:");
+		System.out.println([page.entity.name.toLowerCase().replaceAll(' ', '')/].toString());
+	
+		int opcion = -1;
+	
+		while(opcion > 1 || opcion < 0)
+			opcion = Keyin.inInt("Selecciona una opcion [ '[' /]0-1[ ']' /] : ");
+		
+		[rol.name.toUpperFirst().replaceAll(' ', '')/]Main.screen();
+
+ }
+}
+[/template]
+
+[comment  Parte común de la pagina Delete/]
+[template public generatePageDeleteCommon(page : CRUDPage, rol : Rol)]	
+[comentario(archiveCRUD(page))/]
+
+package view.[rol.name.toUpperFirst().replaceAll(' ', '')/];
+
+import util.Keyin;
+import model.[page.entity.name.toUpperFirst().replaceAll(' ', ' ')/];
+import roles.[rol.name.toUpperFirst().replaceAll(' ', '')/]Main;
+
+public class Delete[page.entity.name.replaceAll(' ','').toUpperFirst()/]{
+	public static void screen(){
+
+		System.out.println("\n\n\n\n");
+
+
+		[page.generateHeadPage(rol, 'índice')/]
+	
+		System.out.println("Listado de : [ '[' /][page.entity.name/][ ']' /]");
+	
+		System.out.println("0.Volver");
+		[for (entity : Entity | page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name))]
+		System.out.println("[page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name)->indexOf(entity)/].[entity.name/] [entity.primarykey.value/]");
+		[/for]
+	
+		int opcion = -1;
+	
+		while(opcion > 2 || opcion < 0)
+			opcion = Keyin.inInt("Selecciona una opcion [ '[' /]0-[page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name)->size()/][ ']' /] : ");
+
+		[switchCRUD(page, rol, 'DeleteCheck')/]
+
+ }
+}
+[/template]
+
+
+[comment  Parte común de la pagina Delete Check/]
+[template public generatePageDeleteCheckCommon(page : CRUDPage, rol : Rol)]	
+[comentario('DeleteCheck' + page.entity.name.replaceAll(' ','').toUpperFirst())/]
+
+package view.[rol.name.toUpperFirst().replaceAll(' ', '')/];
+
+import util.Keyin;
+import roles.[rol.name.toUpperFirst().replaceAll(' ', '')/]Main;
+
+public class DeleteCheck[page.entity.name.replaceAll(' ','').toUpperFirst()/]{
+	public static void screen(){
+		
+		System.out.println("\n\n\n\n");
+
+		[page.generateHeadPage(rol, 'borrado')/]
+	
+		System.out.println("La entidad [page.entity.name/] con identificación [page.entity.primarykey.name/]  =  [page.entity.primarykey.value/] se eliminó satisfactoriamente.");
+	
+		[if (page.entity.entitiesReferences -> size() > 0)]
+		System.out.println("Nota: No se eliminaron los datos correspondiente a las referencias de la [page.entity.name/] :");
+		[for (entity : Entity | page.entity.entitiesReferences)]
+		System.out.println("id_[entity.name/]: [entity.primarykey.name/]:");
+		[/for]
+		[/if]
+
+		int opcion = -1;
+
+		while(opcion > 0 || opcion < 0)
+			opcion = Keyin.inInt("Pulse 0 para volver.");
+
+		Delete[page.entity.name.toUpperFirst().replaceAll(' ', '')/].screen();
+
+ }
+}
+[/template]
+
+[comment  Parte común de la pagina Detail/]
+[template public generatePageDetailCommon(page : CRUDPage, rol : Rol)]	
+[comentario(archiveCRUD(page))/]
+
+package view.[rol.name.toUpperFirst().replaceAll(' ', '')/];
+
+import util.Keyin;
+import model.[page.entity.name.toUpperFirst().replaceAll(' ', ' ')/];
+import roles.[rol.name.toUpperFirst().replaceAll(' ', '')/]Main;
+
+import 
+
+public class Detail[page.entity.name.replaceAll(' ','').toUpperFirst()/]{
+	public static void screen(){
+
+		System.out.println("\n\n\n\n");
+
+		[page.generateHeadPage(rol, 'detalles')/]
+		
+		[page.entity.name.toUpperFirst().replaceAll(' ', '')/] [page.entity.name.toLowerCase().trim()/] = new [page.entity.name.toUpperFirst().trim()/]();
+		[page.entity.name.toLowerCase().trim()/].random();
+	
+		System.out.println("Campos: ");
+	
+		[for (attr : Attribute | page.entity.attributes)]
+		System.out.println("[attr.name/]:");
+		System.out.println([page.entity.name.toLowerCase().replaceAll(' ', '')/].get[attr.name.toUpperFirst()/]());
+		System.out.println();
+	
+		[/for]
+
+		[for (attr : Attribute | page.entity.entitiesReferences.primarykey)]
+		System.out.println("id_[attr.name/]:");
+		System.out.println([page.entity.name.toLowerCase().replaceAll(' ', '')/].get[attr.name.toUpperFirst()/]());
+		System.out.println();
+	
+		[/for]
+				
+		System.out.println("Listado de opciones: ");
+		System.out.println("0.Volver");
+		[for (entity : Entity | page.entity.entitiesReferences)]
+		System.out.println("[page.entity.entitiesReferences->indexOf(entity)/].Consultar detalles de [entity.name/] [entity.primarykey.value/]");
+		[/for]
+	
+		int opcion = -1;
+	
+		while(opcion > [page.entity.entitiesReferences->size()/] || opcion < 0)
+			opcion = Keyin.inInt("Selecciona una opcion [ '[' /]0-[page.entity.entitiesReferences->size()/][ ']' /] : ");
+	
+		switch(opcion){
+			case 0:
+				[rol.name.toUpperFirst().replaceAll(' ', '')/]Main.screen();
+			break;
+			[for (entity : Entity | page.entity.entitiesReferences)]
+			case [page.entity.entitiesReferences->indexOf(entity)/]:
+				Detail[entity.name.replaceAll(' ', '').toUpperFirst()/].screen();
+			break;
+			[/for]
+			default:
+			break;
+		}
+ }
+}
+[/template]
+
+[comment  Parte común de la pagina Index/]
+[template public generatePageIndexCommon(page : CRUDPage, rol : Rol)]	
+[comentario(archiveCRUD(page))/]
+
+package view.[rol.name.toUpperFirst().replaceAll(' ', '')/];
+
+import util.Keyin;
+import roles.[rol.name.toUpperFirst().replaceAll(' ', '')/]Main;
+
+
+public class Index[page.entity.name.replaceAll(' ','').toUpperFirst()/]{
+	public static void screen(){
+		
+    	System.out.println("\n\n\n\n");
+
+		[page.generateHeadPage(rol, 'índice')/]
+	
+		System.out.println("Listado de : [ '[' /][page.entity.name/][ ']' /]");
+	
+		System.out.println("0.Volver");
+		[for (entity : Entity | page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name))]
+		System.out.println("[page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name)->indexOf(entity)/].[entity.name/] [entity.primarykey.value/]");
+		[/for]
+	
+		int opcion = -1;
+	
+		while(opcion >  [page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name)->size()/] || opcion < 0)
+			opcion = Keyin.inInt("Selecciona una opcion [ '[' /]0-[page.eContainer(WebSite).entities->select(e: Entity | e.name = page.entity.name)->size()/][ ']' /] : ");
+
+		[switchCRUD(page, rol, 'Detail')/]
+
+	}
+}
+	
+[/template]
+
+[comment Generador de pagina NormalPage/]
+[template public generatePage(page : NormalPage, rol : Rol)]
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + page.title.toUpperFirst().replaceAll(' ', '') + '.java', false, 'UTF-8')]
+[comentario(page.title)/]
+
+package view.[rol.name.toUpperFirst().replaceAll(' ', '')/];
+
+import util.Keyin;
+import roles.[rol.name.toUpperFirst().replaceAll(' ', '')/]Main;
+
+public class [page.title.replaceAll(' ','').toUpperFirst()/]{
+	public static void screen(){
+     
+		System.out.println("\n\n\n\n");
+
+		System.out.println("Pantalla " + "[page.title/]"  + " Rol " + "[ '[' /]"  + "[rol.name/]" + "[ ']' /]" );
+
+		[if (page.socialMedias->oclIsUndefined())]
+		[else]
+		System.out.println("Redes Sociales: ");
+		[page.socialMedias.generateRRSS()/]
+		[/if]
+		
+		[if (page.pagesexternal->oclIsUndefined())]
+		[else]	
+		System.out.println("Paginas Externas: ");
+		[page.pagesexternal.generateWebExternal()/]
+		[/if]
+		
+		[if (page.multimedias->oclIsUndefined())]
+		[else]	
+		System.out.println("Multimedias: ");
+		[page.multimedias.generateMultimedia()/]
+
+		int opcion = -1;
+		
+		while(opcion > 0 || opcion < 0)
+			opcion = Keyin.inInt("Pulse 0 para volver: ");
+		
+		[rol.name.replaceAll(' ', '').toUpperFirst()/]Main.screen();
+ }
+}
+[/if]
+[/file]
+[/template]
+
+[comment Generador de pagina CRUDPage/]
+[template public generatePage(page : CRUDPage, rol : Rol)]
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + 'Crud' + page.entity.name.toUpperFirst() + '.java', false, 'UTF-8')]
+[comentario(archiveCRUD(page))/]
+
+package view.[rol.name.toUpperFirst().replaceAll(' ', '')/];
+
+import util.Keyin;
+import roles.[rol.name.toUpperFirst().replaceAll(' ', '')/]Main;
+
+public class Crud[page.entity.name.replaceAll(' ','').toUpperFirst()/]{
+	public static void screen(){
+     
+		System.out.println("\n\n\n\n");
+
+
+		[page.generateHeadPage(rol, 'índice')/]
+	
+		System.out.println("Listado de : [ '[' /][page.entity.name/][ ']' /]");
+	
+		System.out.println("0.Volver");
+		System.out.println("1.Listar");
+		System.out.println("2.Crear nuevo elemento");
+		System.out.println("3.Borrar un elemento");
+
+		int opcion = -1;
+	
+		while(opcion > 3 || opcion < 0)
+			opcion = Keyin.inInt("Selecciona una opcion [ '[' /]0-3[ ']' /] : ");
+	
+		switch(opcion){
+			case 0:
+				[rol.name.replaceAll(' ', '').toUpperFirst()/]Main.screen();
+			break;
+			case 1:
+				Index[page.entity.name.toUpperFirst().replace(' ', '')/].screen();
+			break;
+			case 2:
+				Create[page.entity.name.toUpperFirst().replace(' ', '')/].screen();
+			break;
+			case 3:
+				Delete[page.entity.name.toUpperFirst().replace(' ', '')/].screen();
+			break;
+			default:
+			break;
+		}
+
+
+	}
+}
+[/file]
+
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + 'Create' + page.entity.name.toUpperFirst() + '.java', false, 'UTF-8')]
+[generatePageCreateCommon(page, rol)/]
+[/file]
+
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + 'Delete' + page.entity.name.toUpperFirst() + '.java', false, 'UTF-8')]
+[generatePageDeleteCommon(page, rol)/]
+[/file]
+
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + 'DeleteCheck' + page.entity.name.replaceAll(' ','').toUpperFirst() + '.java', false, 'UTF-8')]
+[generatePageDeleteCheckCommon(page, rol)/]
+[/file]
+
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + 'Index' + page.entity.name.toUpperFirst() + '.java', false, 'UTF-8')]
+[generatePageIndexCommon(page, rol)/]
+[/file]
+
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + 'Detail' + page.entity.name.toUpperFirst() + '.java', false, 'UTF-8')]
+[generatePageDetailCommon(page, rol)/]
+[/file]
+
+[/template]
+
+[comment Generador de pagina CreatePage/]
+[template public generatePage(page : CreatePage, rol : Rol)]
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + archiveCRUD(page) + '.java', false, 'UTF-8')]
+[generatePageCreateCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Generador de pagina DeletePage/]
+[template public generatePage(page : DeletePage, rol : Rol)]
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + archiveCRUD(page) + '.java', false, 'UTF-8')]
+[generatePageDeleteCommon(page, rol)/]
+[/file]
+
+[file('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + 'DeleteCheck' + page.entity.name.replaceAll(' ','').toUpperFirst() + '.java', false, 'UTF-8')]
+[generatePageDeleteCheckCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Generador de pagina DetailPage/]
+[template public generatePage(page : DetailPage, rol : Rol)]
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + archiveCRUD(page) + '.java', false, 'UTF-8')]
+[generatePageDetailCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Generador de pagina IndexPage/]
+[template public generatePage(page : IndexPage, rol : Rol)]
+[file ('view/' + rol.name.toUpperFirst().replaceAll(' ', '') + '/' + archiveCRUD(page)  + '.java', false, 'UTF-8')]
+[generatePageIndexCommon(page, rol)/]
+[/file]
+[/template]
+
+[comment Nombre del archivo CRUD/]
+[template public archiveCRUD(page : CRUDPage)]
+[if (page.oclIsTypeOf(DetailPage))]Detail[page.entity.name.toUpperFirst()/][elseif(page.oclIsTypeOf(IndexPage))]Index[page.entity.name.toUpperFirst()/][elseif(page.oclIsTypeOf(DeletePage))]Delete[page.entity.name.toUpperFirst()/][elseif(page.oclIsTypeOf(CreatePage))]Create[page.entity.name.toUpperFirst()/][elseif(page.oclIsTypeOf(CRUDPage))]Crud[page.entity.name.toUpperFirst()/][/if]
+[/template]
+
+[comment Titulo de opción de la pagina CRUD/]
+[template public titlePageCRUD(page : CRUDPage)]
+[if (page.oclIsTypeOf(DetailPage))] Detalles[elseif (page.oclIsTypeOf(IndexPage))] Índice[elseif (page.oclIsTypeOf(DeletePage))] Borrar[elseif (page.oclIsTypeOf(CreatePage))] Crear[elseif (page.oclIsTypeOf(CRUDPage))] CRUD[/if]
+[/template]
+
+[comment Template para generar Paginas principales del roles /]
+[template public generateMainRole(rol : Rol)]
+[file ('roles/' + rol.name.toUpperFirst().replaceAll(' ', '') + 'Main.java', false, 'UTF-8')]
+[comentario(rol.name.toUpperFirst().replaceAll(' ', '') + 'Main.java')/]
+
+package roles;
+
+import util.*;
+import view.[rol.name.toUpperFirst().replaceAll(' ', '')/].*;
+
+public class [rol.name.toUpperFirst().replaceAll(' ', '')/]Main{
+	public static void screen(){
+		
+		System.out.println("\n\n\n\n");
+
+		System.out.println("Pantalla principal del rol " + "[ '[' /][rol.name/][ ']' /]");
+		System.out.println("Listado de páginas a las que tiene acceso:");
+
+		int opcion = 0;
+		System.out.println("0.Volver");
+		[for (page : CRUDPage | rol.access->selectByKind(CRUDPage))]
+		System.out.println(++opcion + "." + "[ '[' /][page.entity.name/][ ']' /]" +  "[titlePageCRUD(page)/]" );
+		[/for]
+		[for (page : NormalPage | rol.access->selectByKind(NormalPage))]
+		System.out.println(++opcion + "." + "[page.title/]" );
+		[/for]
+
+			
+		opcion = -1;
+		
+		while(opcion > [rol.access->size()/] || opcion < 0)
+			opcion = Keyin.inInt("Selecciona una opcion [ '[' /]0-[rol.access->size()/][ ']' /] : ");
+		
+		switch(opcion){
+			case 0:
+				Main.screen();
+			break;
+			[for (page : CRUDPage | rol.access->selectByKind(CRUDPage))]
+			case [rol.access->indexOf(page)/]:
+				[archiveCRUD(page).replaceAll(' ', '').toUpperFirst()/].screen();
+			break;
+			[/for]
+			[for (page : NormalPage | rol.access->selectByKind(NormalPage))]
+			case [rol.access->indexOf(page)/]:
+			  [page.title.replaceAll(' ', '').toUpperFirst()/].screen();
+			break;
+			[/for]
+			default:
+			break;
+		}
+	}
+}
+[/file]
+
+[rol.access->selectByKind(CRUDPage).generatePage(rol)/]
+[rol.access->selectByKind(NormalPage).generatePage(rol)/]
+
+[/template]
+
+[comment  Pagina para generar la pantalla principal de la aplicación/]
+[template public generateConsole(aWebSite : WebSite)]
+[comment @main/]
+[file ('util/Main.java', false, 'UTF-8')]
+[comentario('Main.java')/]
+
+package util;
+
+import roles.*;
+
+public class Main{
+	public static void main(String args['['/][']'/]){
+	 	screen();
+    }
+
+   public static void screen(){
+	
+    	System.out.println("\n\n\n\n");
+
+		System.out.println("Nombre de la aplicación: [aWebSite.name/]");
+		System.out.println("Roles de acceso a la información: ");
+		System.out.println();
+	
+		String [ '[' /][ ']' /]  roles = {[for (rol : Rol | aWebSite.roles) separator(',')]"[rol.name/]"[/for]};
+		
+		int opcion = 0;
+
+		System.out.println("0.Salir");
+		for (int i = 0; i < [aWebSite.roles->size()/]; i++)
+			System.out.println(++opcion + "." + roles[ '[' /]i[ ']' /]);
+			
+		opcion = -1;
+		
+		while(opcion > [aWebSite.roles->size()/] || opcion < 0)
+			opcion = Keyin.inInt("Selecciona una opcion [ '[' /]0-[aWebSite.roles->size()/][ ']' /] : ");
+
+		System.out.println();
+
+		switch(opcion){
+			[for (rol : Rol | aWebSite.roles)]
+			case [aWebSite.roles->indexOf(rol)/]:
+				[rol.name.replaceAll(' ', '').toUpperFirst()/]Main.screen();
+			break;
+			[/for]
+			default:
+			break;
+		}
+   }
+	
+}
+[/file]
+
+[aWebSite.roles.generateMainRole()/]
+
+[file ('util/Keyin.java', false, 'UTF-8')]
+
+package util;
+
+public class Keyin {
+
+  //*******************************
+  //   support methods
+  //*******************************
+  //Method to display the user's prompt string
+  public static void printPrompt(String prompt) {
+    System.out.print(prompt + " ");
+    System.out.flush();
+  }
+
+  //Method to make sure no data is available in the
+  //input stream
+  public static void inputFlush() {
+    int dummy;
+    int bAvail;
+
+    try {
+      while ((System.in.available()) != 0)
+        dummy = System.in.read();
+    } catch (java.io.IOException e) {
+      System.out.println("Input error");
+    }
+  }
+  public static String inString() {
+    int aChar;
+    String s = "";
+    boolean finished = false;
+
+    while (!finished) {
+      try {
+        aChar = System.in.read();
+        if (aChar < 0 || (char) aChar == '\n')
+          finished = true;
+        else if ((char) aChar != '\r')
+          s = s + (char) aChar; // Enter into string
+      }
+
+      catch (java.io.IOException e) {
+        System.out.println("Input error");
+        finished = true;
+      }
+    }
+    return s;
+  }
+
+  public static int inInt(String prompt) {
+    while (true) {
+      inputFlush();
+      printPrompt(prompt);
+      try {
+        return Integer.valueOf(inString().trim()).intValue();
+      }
+
+      catch (NumberFormatException e) {
+        System.out.println("Invalid input. Not an integer");
+      }
+    }
+  }
+}
+[/file]
+
+
+[/template]
+
+[template public comentario(arg : String)]
+/*
+	Autores : Pedro Miguel Carmona Broncano && Ruben Marin Lucas
+	Fichero : [arg/]
+	Proyecto de la asignatura DMSS
+*/
+[/template]
+
+
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated dataWebDeskDSL -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="dataWebDeskDSL.presentation.DataWebDeskDSLModelWizardID"
+            name="%_UI_DataWebDeskDSLModelWizard_label"
+            class="dataWebDeskDSL.presentation.DataWebDeskDSLModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/DataWebDeskDSLModelFile.gif">
+         <description>%_UI_DataWebDeskDSLModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated dataWebDeskDSL -->
+      <editor
+            id="dataWebDeskDSL.presentation.DataWebDeskDSLEditorID"
+            name="%_UI_DataWebDeskDSLEditor_label"
+            icon="icons/full/obj16/DataWebDeskDSLModelFile.gif"
+            extensions="datawebdeskdsl"
+            class="dataWebDeskDSL.presentation.DataWebDeskDSLEditor"
+            contributorClass="dataWebDeskDSL.presentation.DataWebDeskDSLActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

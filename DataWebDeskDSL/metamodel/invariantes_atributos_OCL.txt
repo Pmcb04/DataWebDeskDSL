@@ -1,0 +1,67 @@
+/*R01. En la aplicación existirá una y sólo una página/pantalla Index/Home.*/
+
+[Website] invariant one_home: pages->selectByType(MainPage)->select(mannagment->oclIsUndefined()) -> size() = 1; 
+
+
+/*R02. No podemos tener páginas/pantallas aisladas (o inalcanzables) en la aplicación.*/
+
+[Website] invariant no_pages_alone : self.roles.access->asSet()->size()+1 = self.pages->size() ;
+
+/*R03. Asociar a una entidad la funcionalidad CRUD es incompatible con asociarle también
+cualquiera de las funcionalidades individuales de Índice, Detalle, Creación o Borrado.*/
+
+[Entity] invariant no_more_CRUD: crudpages->selectByType(CRUDPage)->size() = 1 implies crudpages->size() = 1;
+
+/*R04. Si una entidad tiene asociada la funcionalidad de Índice, deberá tener también asociada la
+funcionalidad de Detalle, y viceversa.*/
+
+[Entity] invariant index_details_together: ((crudpages->selectByType(IndexPage)->size() = 1 implies crudpages->selectByType(DetailPage)->size() = 1) 
+					and  (crudpages->selectByType(DetailPage)->size() = 1  implies crudpages->selectByType(IndexPage)->size() = 1));
+
+/*R05. La aplicación estará configurada para consultar, al menos, una red social o fuente de datos
+externa RSS.*/
+
+[Website] invariant one_sm : pages.socialMedias -> size() >= 1;
+
+/*R06. Una entidad no puede referenciarse a sí misma.*/
+
+[Entity] invariant no_myself : entitiesReferences->excludes(self) ;
+
+/*R07. Una entidad no puede estar referenciada por ninguna de las Entidades a las que
+referencia.*/
+
+[Entity]  invariant no_other_references : entitiesReferences.entitiesReferences->excludes(self) ;
+
+-------------------------------------------------------------------------------------------------------------
+
+/*D01. Atributo derivado numeroPaginasAccesibles que calcule el número de
+páginas/pantallas que son accesibles desde cada rol.*/
+
+[Rol]  attribute numeroPaginasAccesibles : ecore::EInt[1] { derived transient volatile }
+		{
+			initial: if (self.access ->oclIsUndefined()) then 0
+					else self.access -> size()
+					endif;
+		}
+		
+		
+/*D02. Atributo derivado numeroEntidadesAccesibles que indique el número de Entidades a
+las que tiene acceso cada rol.*/
+
+[Rol] 	attribute numeroEntidadesAccesibles : ecore::EInt[1] { derived transient volatile }
+			{
+				initial: if (self.access->selectByKind(CRUDPage).entity->oclIsUndefined()) then 0
+						else self.access->selectByKind(CRUDPage).entity->asSet() -> size()
+						endif;
+				}
+			}
+
+/*D03. Atributo derivado paginasMediasAccesibles que calcule el número medio de
+páginas/pantallas que tienen accesibles todos los roles.*/
+
+[Website] 	attribute paginasMediasAccesibles : ecore::EFloat[1] { derived transient volatile }
+				{
+					initial: if (self.roles->size() = 0) then 0
+							 else self.roles.numeroPaginasAccesibles -> sum() / self.roles -> size()
+							 endif;
+				}

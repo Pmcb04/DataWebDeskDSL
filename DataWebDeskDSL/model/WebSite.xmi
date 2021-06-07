@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataWebDeskDSL:WebSite
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dataWebDeskDSL="http://www.example.org/dataWebDeskDSL"
+    name="Campus Vitual">
+  <pages xsi:type="dataWebDeskDSL:MainPage"
+      title="Home"/>
+  <pages xsi:type="dataWebDeskDSL:IndexPage"
+      title="asignaturas"
+      mannagment="//@roles.2 //@roles.0"
+      entity="//@entities.2"/>
+  <pages xsi:type="dataWebDeskDSL:CreatePage"
+      title="asignatura"
+      mannagment="//@roles.0"
+      entity="//@entities.2">
+    <socialMedias
+        user="rubml"/>
+    <pagesexternal
+        url="https://www.unex.es"
+        name="Unex"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:DeletePage"
+      title="asignatura"
+      mannagment="//@roles.0"
+      entity="//@entities.2"/>
+  <pages xsi:type="dataWebDeskDSL:IndexPage"
+      title="alumnos"
+      mannagment="//@roles.2 //@roles.1"
+      entity="//@entities.1">
+    <socialMedias
+        name="Twitter"
+        user="pmcb04"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:CreatePage"
+      title="alumno"
+      mannagment="//@roles.1"
+      entity="//@entities.1">
+    <pagesexternal
+        url="https://www.google.es"
+        name="Google"/>
+  </pages>
+  <pages xsi:type="dataWebDeskDSL:CRUDPage"
+      title="titulo"
+      mannagment="//@roles.1"
+      entity="//@entities.3"/>
+  <pages xsi:type="dataWebDeskDSL:DetailPage"
+      title="alumno"
+      mannagment="//@roles.1 //@roles.2"
+      entity="//@entities.1"/>
+  <pages xsi:type="dataWebDeskDSL:DetailPage"
+      title="asignatura"
+      mannagment="//@roles.3 //@roles.0 //@roles.2"
+      entity="//@entities.2"/>
+  <pages xsi:type="dataWebDeskDSL:IndexPage"
+      title="profesor"
+      mannagment="//@roles.2 //@roles.1 //@roles.3"
+      entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:DetailPage"
+      title="profesor"
+      mannagment="//@roles.2 //@roles.1 //@roles.3 //@roles.0"
+      entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:CreatePage"
+      title="profesor"
+      mannagment="//@roles.1"
+      entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:DeletePage"
+      title="profesor"
+      mannagment="//@roles.3 //@roles.0"
+      entity="//@entities.0"/>
+  <pages xsi:type="dataWebDeskDSL:NormalPage"
+      title="Unex"
+      mannagment="//@roles.2 //@roles.0 //@roles.3 //@roles.1">
+    <multimedias
+        xsi:type="dataWebDeskDSL:Text"
+        name="hola"/>
+    <multimedias
+        xsi:type="dataWebDeskDSL:Video"
+        name="tutorial"/>
+    <multimedias
+        xsi:type="dataWebDeskDSL:Audio"
+        name="cancion"/>
+    <multimedias
+        xsi:type="dataWebDeskDSL:Image"
+        name="aprobado"/>
+  </pages>
+  <roles name="Administrador"
+      access="//@pages.8 //@pages.1 //@pages.2 //@pages.3 //@pages.10 //@pages.12 //@pages.13"/>
+  <roles name="Profesor"
+      access="//@pages.4 //@pages.5 //@pages.6 //@pages.7 //@pages.10 //@pages.9 //@pages.11 //@pages.13"/>
+  <roles name="Estudiante"
+      access="//@pages.1 //@pages.4 //@pages.7 //@pages.8 //@pages.9 //@pages.10 //@pages.13"/>
+  <roles name="Personal de Administracion y Servicios"
+      access="//@pages.8 //@pages.12 //@pages.9 //@pages.10 //@pages.13"/>
+  <entities
+      name="Profesor"
+      primarykey="//@entities.0/@attributes.1"
+      crudpages="//@pages.9 //@pages.10 //@pages.11 //@pages.12">
+    <attributes
+        type="//@datatype.0"
+        name="nombre_profesor"
+        value="Ruben"
+        maxValues="1"/>
+    <attributes
+        type="//@datatype.1"
+        name="num_profesor"
+        value="3476"
+        maxValues="1"/>
+  </entities>
+  <entities
+      name="Alumno"
+      primarykey="//@entities.1/@attributes.1"
+      crudpages="//@pages.4 //@pages.5 //@pages.7">
+    <attributes
+        type="//@datatype.0"
+        name="nombre"
+        value="Pedro"
+        maxValues="2"/>
+    <attributes
+        type="//@datatype.1"
+        name="num_expediente"
+        value="9387"
+        maxValues="1"/>
+  </entities>
+  <entities
+      name="Asignatura"
+      entitiesReferences="//@entities.0"
+      primarykey="//@entities.2/@attributes.0"
+      crudpages="//@pages.1 //@pages.2 //@pages.3 //@pages.8">
+    <attributes
+        type="//@datatype.1"
+        name="num_asignatura"
+        value="84334"
+        maxValues="1"/>
+    <attributes
+        type="//@datatype.0"
+        name="nombre_asignatura"
+        value="DMSS"
+        maxValues="1"/>
+  </entities>
+  <entities
+      name="Título"
+      primarykey="//@entities.3/@attributes.0"
+      crudpages="//@pages.6">
+    <attributes
+        type="//@datatype.0"
+        name="nombre_titulo"
+        value="Ingenieria Informatica"
+        maxValues="1"/>
+    <attributes
+        type="//@datatype.1"
+        name="num_creditos"
+        value="240"
+        maxValues="1"/>
+    <attributes
+        type="//@datatype.0"
+        name="especialidad"
+        value="Ingenieria"/>
+  </entities>
+  <datatype
+      name="String"/>
+  <datatype
+      name="int"/>
+</dataWebDeskDSL:WebSite>

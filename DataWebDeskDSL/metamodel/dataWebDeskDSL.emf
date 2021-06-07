@@ -1,0 +1,299 @@
+@gmf
+@Ecore(invocationDelegates="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot", settingDelegates="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot", validationDelegates="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot")
+@namespace(uri="http://www.example.org/dataWebDeskDSL", prefix="dataWebDeskDSL")
+package dataWebDeskDSL;
+
+@gmf.node(label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/rol.svg")
+@MyDSLDoc(Name="Rol", Description="Permite diferenciar los distintos tipos de usuarios de la aplicación. Cada rol debe definir de forma obligatoria el atributo name. Además debe tener acceso de 1 a más páginas")
+class Rol {
+
+  @MyDSLDoc(Name="name", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String name;
+
+  @gmf.link(source="access", target="mannagment", style="dot", width="2")
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="*", Name="access", Type="reference")
+  ref Page[+]#mannagment access;
+
+  @"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"(derivation="if (self.access ->oclIsUndefined()) then 0
+					else self.access -> size()
+					endif")
+  volatile transient derived attr int[1] numeroPaginasAccesibles;
+
+  @"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"(derivation="if (self.access->selectByKind(CRUDPage).entity->oclIsUndefined()) then 0
+						else self.access->selectByKind(CRUDPage).entity->asSet() -> size()
+						endif")
+  volatile transient derived attr int[1] numeroEntidadesAccesibles;
+}
+
+@gmf.node(label="title", border.width="3", border.color="207,89,25", border.style="solid")
+@MyDSLDoc(Name="NormalPage", Description="Páginas de tipo normal representadas en el modelo. ")
+class NormalPage extends Page {
+}
+
+@gmf.node(label="title", border.width="3", border.color="207,204,25", border.style="solid")
+@MyDSLDoc(Name="CreatePage", Description="Páginas de tipo create representadas en el modelo. ")
+class CreatePage extends CRUDPage {
+}
+
+@gmf.node(label="title", border.width="3", border.color="92,25,207", border.style="solid")
+@MyDSLDoc(Name="MainPage", Description="Páginas de tipo main representadas en el modelo. ")
+class MainPage extends Page {
+}
+
+@gmf.node(label="title", border.width="3", border.color="25,55,207", border.style="solid")
+@MyDSLDoc(Name="DetailPage", Description="Páginas de tipo detail representadas en el modelo. ")
+class DetailPage extends CRUDPage {
+}
+
+@gmf.node(label="title", border.width="3", border.color="207,25,25", border.style="solid")
+@MyDSLDoc(Name="DeletePage", Description="Páginas de tipo delete representadas en el modelo. ")
+class DeletePage extends CRUDPage {
+}
+
+@gmf.node(label="title", border.width="3", border.color="207,25,140", border.style="solid")
+@MyDSLDoc(Name="CRUDPage", Description="Páginas de tipo CRUD representadas en el modelo. Está relacionado con alguna entidad (Entity).  Es superclase de DetailPage, DeletePage, IndexPage y  CreatePage.")
+class CRUDPage extends Page {
+
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="1", Name="entity", Type="reference")
+  ref Entity[1]#crudpages entity;
+}
+
+@gmf.node(label="title", border.width="3", border.color="25,207,94", border.style="solid")
+@MyDSLDoc(Name="IndexPage", Description="Páginas de tipo index representadas en el modelo. ")
+class IndexPage extends CRUDPage {
+}
+
+@MyDSLDoc(Name="Page", Description="Paginas representadas en el modelo. Cada página está compuesta de calquier número de redes sociales (SocialMedia), páginas externas (PageExternal) y archivos multimedia (Multimedia). Además debe definir el atributo name y puede tener cualquier número de referencias a otras páginas o a ella misma. Es superclase abstracta de MainPage, NormalPage y CRUDPage")
+abstract class Page {
+
+  @gmf.link(target.decoration="arrow", style="dash")
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="pagesReferences", Type="reference")
+  ref Page[*] pagesReferences;
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="socialMedias", Type="composition")
+  val SocialMedia[*] socialMedias;
+
+  @MyDSLDoc(Name="title", Type="EString")
+  attr String title;
+
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="mannagment", Type="reference")
+  ref Rol[*]#access mannagment;
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="pagesexternal", Type="reference")
+  val PageExternal[*] pagesexternal;
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="multimedia", Type="reference")
+  val Multimedia[*] multimedias;
+}
+
+@gmf.node(label="user", label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/redes-sociales.svg")
+@MyDSLDoc(Name="Social Media", Description="Redes sociales modeladas en el sistema. De forma obligatoria debe definir los atributos user y name.")
+class SocialMedia {
+
+  @MyDSLDoc(Name="name", Type="TypeSocialMedia", "Lower bound"="1", "Upper bound"="1")
+  attr TypeSocialMedia name;
+
+  @MyDSLDoc(Name="user", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String user;
+}
+
+@gmf.diagram(label = "name")
+@Ecore(constraints="one_sm one_home no_pages_alone")
+@"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"(one_sm="pages.socialMedias -> size() >= 1", one_home="pages->selectByType(MainPage)->select(mannagment->size() = 0) -> size() = 1", no_pages_alone="self.roles.access->asSet()->size()+1 = self.pages->size() ")
+@MyDSLDoc(Authors="Pedro Miguel Carmona Broncano & Rubén Marín Lucas", "Last Updated"="28/05/2021", Name="WebSite", Description="Sitio web representado en el modelo. Está compuesto por una o varias entidades (Entity), por una o varias páginas (Page) y por cualquier número de páginas (Page), roles (Roles) y tipos de dato (DataType). Define de forma obligatoria el atributo name.")
+class WebSite {
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="*", Name="pages", Type="composition")
+  val Page[+] pages;
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="roles", Type="composition")
+  val Rol[*] roles;
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="*", Name="entities", Type="composition")
+  val Entity[+] entities;
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="dataType", Type="composition")
+  val DataType[*] ~datatype;
+
+  @"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"(derivation="if (self.roles->size() = 0) then 0
+							 else (self.roles.numeroPaginasAccesibles -> sum() / self.roles -> size())
+							 endif")
+  volatile transient derived attr float[1] paginasMediasAccesibles;
+
+  @MyDSLDoc(Name="name", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String[1] name;
+}
+
+@gmf.node(label="name", border.width="3", border.color="25,204,207", border.style="solid")
+@Ecore(constraints="no_myself no_other_references no_more_CRUD index_details_together")
+@"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"(no_myself="entitiesReferences->excludes(self) ", no_other_references="entitiesReferences.entitiesReferences->excludes(self) ", no_more_CRUD="crudpages->selectByType(CRUDPage)->size() = 1 implies crudpages->size() = 1", index_details_together="
+					((crudpages->selectByType(IndexPage)->size() = 1 implies crudpages->selectByType(DetailPage)->size() = 1) 
+					and  (crudpages->selectByType(DetailPage)->size() = 1  implies crudpages->selectByType(IndexPage)->size() = 1))")
+@MyDSLDoc(Name="Entity", Description="Represenata a los datos que pueden incluir las distintas páginas. Está relacionada con 1 o más páginas crud, además de referenciar a cualquier numero de entidades y tener un primary key. Debe definir de forma obligatoria un name. Cada entity está compuesta  por uno o más atributos.  ")
+class Entity {
+
+  @gmf.compartment(collapsible="true", layout="free")
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="*", Name="attributes", Type="composition")
+  val Attribute[+] attributes;
+
+  @MyDSLDoc(Name="name", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String name;
+
+  @gmf.link(target.decoration="arrow", style="dash")
+  @MyDSLDoc("Upper bound"="0", "Lower bound"="*", Name="entitiesReferences", Type="reference")
+  ref Entity[*] entitiesReferences;
+
+  @gmf.link(target.decoration="arrow", style="dash")
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="1", Name="primarykey", Type="reference")
+  ref Attribute[1] primarykey;
+
+  @gmf.link(source="crudpages", target="entity", style="dot", width="2")
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="*", Name="crudpages", Type="reference")
+  ref CRUDPage[+]#entity crudpages;
+}
+
+@gmf.node(label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/atributo.svg")
+@MyDSLDoc(Name="Attribute", Description="Permite definir los atributos de las entidades. Define de froma obligatoria los atributos name, value y maxvalues. Además está relacionado con un tipo (type)")
+class Attribute {
+
+  @gmf.link(target.decoration="arrow", style="dash")
+  @MyDSLDoc("Upper bound"="1", "Lower bound"="1", Name="trype", Type="reference")
+  ref DataType[1] type;
+
+  @MyDSLDoc(Name="name", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String name;
+
+  @MyDSLDoc(Name="value", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String value;
+
+  @MyDSLDoc(Name="maxValues", Type="EInt", "Lower bound"="1", "Upper bound"="1")
+  attr int[1] maxValues;
+}
+
+@gmf.node(label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/datatype.svg")
+@MyDSLDoc(Name="Entity", Description="Permite definir el tipo de datos de los atributos. Define de forma obligatoria el atributo name.")
+class DataType {
+
+  @MyDSLDoc(Name="name", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String name;
+}
+
+@gmf.node(label="url", label ="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/url.svg")
+@MyDSLDoc(Name="PageExternal", Description="Páginas externas modeladas en el sistema. De forma obligatoria debe definir los atributos url y name.")
+class PageExternal {
+
+  @MyDSLDoc(Name="url", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String url;
+
+  @MyDSLDoc(Name="name", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String name;
+}
+
+@MyDSLDoc(Name="Multimedia", Description="Representa a los distintos datos que pueden contener las páginas. Define de forma obligatoria el atributo name. Es una superclase abstracta de Text, Video, Audio e Image")
+abstract class Multimedia {
+
+  @MyDSLDoc(Name="name", Type="EString", "Lower bound"="1", "Upper bound"="1")
+  attr String name;
+}
+
+@gmf.node(label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/file.svg")
+@MyDSLDoc(Name="Multimedia", Description="Elemento de tipo texto representado en el modelo. ")
+class Text extends Multimedia {
+
+  @MyDSLDoc(Name="extension", Type="TypeText", "Lower bound"="1", "Upper bound"="1")
+  attr TypeText extension;
+}
+
+@gmf.node(label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/video.svg")
+@MyDSLDoc(Name="Video", Description="Elemento de tipo video representado en el modelo.")
+class Video extends Multimedia {
+
+  @MyDSLDoc(Name="extension", Type="TypeText", "Lower bound"="1", "Upper bound"="1")
+  attr TypeVideo extension;
+}
+
+@gmf.node(label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/audio.svg")
+@MyDSLDoc(Name="Audio", Description="Elemento de tipo audio representado en el modelo.")
+class Audio extends Multimedia {
+
+  @MyDSLDoc(Name="extension", Type="TypeText", "Lower bound"="1", "Upper bound"="1")
+  attr TypeAudio extension;
+}
+
+@gmf.node(label="name", label.icon="false", figure="svg", svg.uri="platform:/plugin/DataWebDeskDSL/icons/image.svg")
+@MyDSLDoc(Name="Image", Description="Elemento de tipo imagen representado en el modelo.")
+class Image extends Multimedia {
+
+  @MyDSLDoc(Name="extension", Type="TypeText", "Lower bound"="1", "Upper bound"="1")
+  attr TypeImage extension;
+}
+
+@MyDSLDoc(Name="TypeText", Description="Representa el tipo de dato texto en el modelo.")
+enum TypeText {
+
+  @MyDSLDoc(Name="txt", Value="0")
+  txt = 0;
+
+  @MyDSLDoc(Name="doc", Value="1")
+  doc = 1;
+
+  @MyDSLDoc(Name="docx", Value="2")
+  docx = 2;
+}
+
+@MyDSLDoc(Name="TypeAudio", Description="Representa el tipo de dato audio en el modelo.")
+enum TypeAudio {
+
+  @MyDSLDoc(Name="mp3", Value="0")
+  mp3 = 0;
+
+  @MyDSLDoc(Name="wav", Value="1")
+  wav = 1;
+
+  @MyDSLDoc(Name="wma", Value="2")
+  wma = 2;
+}
+
+@MyDSLDoc(Name="TypeImage", Description="Representa el tipo de dato imagen en el modelo.")
+enum TypeImage {
+
+  @MyDSLDoc(Name="png", Value="0")
+  png = 0;
+
+  @MyDSLDoc(Name="jpg", Value="1")
+  jpg = 1;
+
+  @MyDSLDoc(Name="gif", Value="2")
+  gif = 2;
+}
+
+@MyDSLDoc(Name="TypeVideo", Description="Representa el tipo de dato video en el modelo.")
+enum TypeVideo {
+
+  @MyDSLDoc(Name="mp4", Value="0")
+  mp4 = 0;
+
+  @MyDSLDoc(Name="avi", Value="1")
+  avi = 1;
+
+  @MyDSLDoc(Name="mkv", Value="2")
+  mkv = 2;
+}
+
+@MyDSLDoc(Name="TypeVideo", Description="Representa el tipo de dato video en el modelo.")
+enum TypeSocialMedia {
+
+  @MyDSLDoc(Name="facebook", Value="0")
+  Facebook = 0;
+
+  @MyDSLDoc(Name="twitter", Value="1")
+  Twitter = 1;
+}
+
